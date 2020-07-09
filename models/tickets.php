@@ -15,9 +15,12 @@ class tickets extends mysql {
     /**
      * Read ticket
      * @param $ticketId
+     * @return mixed
      */
     public function readTicket($ticketId) {
-
+        $req = parent::_getConnection()->prepare("SELECT * FROM tickets WHERE id = ?");
+        $req->execute(array($ticketId));
+        return $req->fetch();
     }
 
     /**
