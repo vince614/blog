@@ -8,18 +8,6 @@ class users extends mysql {
     const MIN_PASSWORD_LENGTH = 7;
 
     /**
-     * Login flag
-     * @var $isLogin
-     */
-    protected $_isLogin = false;
-
-    /**
-     * Login flag
-     * @var bool
-     */
-    public $login = false;
-
-    /**
      * Register account
      * @param $userInformations
      * @return string
@@ -45,13 +33,6 @@ class users extends mysql {
     }
 
     /**
-     * Check if user is login
-     * @return bool
-     */
-    public function isLogin() {
-        return $this->_isLogin;
-    }
-    /**
      * Check if user exist
      * @param $email
      * @return bool
@@ -76,7 +57,15 @@ class users extends mysql {
             $req = parent::_getConnection()->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
             $req->execute(array($email, sha1($password)));
             if ($req->rowCount() > 0) {
-                $this->_isLogin = true;
+                $loginInformation = $req->fetch();
+                parent::_setIsLogin(
+                    true,
+                    [
+                        $loginInformation['id'],
+                        $loginInformation['email'],
+                        $loginInformation['username'],
+                        $loginInformation['register_date']
+                    ]);
                 return true;
             }
             return "Le mot de passe n'est pas correct. Veuillez réessayer";
@@ -84,4 +73,13 @@ class users extends mysql {
         return "Aucun compte n'existe avec cette adresse mail";
     }
 
+    /**
+     * Logout from sesssion
+     */
+    public function logout() {
+        if (isset($_SESSION['user'])) {
+            // Unset user session
+            unset($_SESSION['user']);
+        }
+    }
 }
