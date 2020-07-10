@@ -10,7 +10,7 @@ class users extends mysql {
     /**
      * Register account
      * @param $userInformations
-     * @return string
+     * @return string|bool
      */
     public function register($userInformations) {
         $email = $userInformations[0];
@@ -23,7 +23,7 @@ class users extends mysql {
                 if (!$this->_userExist($email)) {
                     $req = parent::_getConnection()->prepare("INSERT INTO users (email, username, password, register_date) VALUES (?, ?, ?, ?)");
                     $req->execute(array($email, $username, sha1($password), time()));
-                    return false;
+                    return true;
                 }
                 return "Cette adresse mail existe déjà";
             }
