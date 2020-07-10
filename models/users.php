@@ -82,4 +82,18 @@ class users extends mysql {
             unset($_SESSION['user']);
         }
     }
+
+    /**
+     * Check if user is admin
+     * @param $userId
+     * @return bool
+     */
+    public function isAdmin($userId) {
+        $req = parent::_getConnection()->prepare("SELECT * FROM users WHERE id = ? AND admin = ?");
+        $req->execute(array($userId, 0));
+        if ($req->rowCount() > 0) {
+            return true;
+        }
+        return false;
+    }
 }
