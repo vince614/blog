@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/models/Comments.php" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/models/Tickets.php" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/models/Users.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Models/Comments.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Models/Tickets.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Models/Users.php" dialect="GenericSQL" />
   </component>
 </project>
