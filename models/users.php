@@ -90,7 +90,7 @@ class users extends mysql {
      */
     public function isAdmin($userId) {
         $req = parent::_getConnection()->prepare("SELECT * FROM users WHERE id = ? AND admin = ?");
-        $req->execute(array($userId, 0));
+        $req->execute(array($userId, 1));
         if ($req->rowCount() > 0) {
             return true;
         }
