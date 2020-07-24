@@ -14,7 +14,7 @@ class Route
 
     /**
      * Callable
-     * @var string
+     * @var mixed
      */
     private $callable;
 
@@ -56,7 +56,7 @@ class Route
             return false;
         }
         array_shift($matches);
-        $this->matches = $matches;  // On sauvegarde les paramètre dans l'instance pour plus tard
+        $this->matches = $matches;
         return true;
     }
 
@@ -64,7 +64,8 @@ class Route
      * Call route
      * @return mixed
      */
-    public function call(){
+    public function call()
+    {
         return call_user_func_array($this->callable, $this->matches);
     }
 }

@@ -31,7 +31,7 @@ class Router
     }
 
     /**
-     * Get method
+     * Add route with GET_METHOD
      * @param $path
      * @param $callable
      * @param null $name
@@ -64,7 +64,7 @@ class Router
     }
 
     /**
-     * Post method
+     * Add route with POST_METHOD
      * @param $path
      * @param $callable
      * @param null $name
