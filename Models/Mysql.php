@@ -1,6 +1,6 @@
 <?php
 
-class mysql {
+class Mysql {
 
     /**
      * Connection with database

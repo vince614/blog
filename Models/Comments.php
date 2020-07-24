@@ -1,6 +1,6 @@
 <?php
 
-class comments extends mysql {
+class Comments extends Mysql {
 
     /**
      * Create comment

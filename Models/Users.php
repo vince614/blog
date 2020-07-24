@@ -1,6 +1,6 @@
 <?php
 
-class users extends mysql {
+class Users extends Mysql {
 
     /**
      * Minimum password length

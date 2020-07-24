@@ -1,6 +1,6 @@
 <?php
 
-class tickets extends mysql {
+class Tickets extends Mysql {
 
     /**
      * Create ticket
