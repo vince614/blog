@@ -66,6 +66,24 @@ class Route
      */
     public function call()
     {
+        $this->load();
         return call_user_func_array($this->callable, $this->matches);
+    }
+
+    /**
+     * Load model & controller
+     */
+    private function load() {
+        require_once 'Models/Mysql.php';
+
+        $controller = ucfirst($this->path);
+        $controllerClass = $controller . "Controller";
+        $controllerFile = "Controllers/" . $controllerClass . '.php';
+
+        // If controller exist
+        if (file_exists($controllerFile)) {
+            require_once $controllerFile;
+            new $controllerClass($this->path);
+        }
     }
 }
