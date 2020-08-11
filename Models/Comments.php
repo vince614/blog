@@ -9,7 +9,7 @@ class Comments extends Mysql {
      * @return $this
      */
     public function createComment($comment, $authorId) {
-        $req = parent::_getConnection()->prepare("INSERT INTO comments (comment, author, date_public) VALUES (?, ?, ?)");
+        $req = Mysql::_getConnection()->prepare("INSERT INTO comments (comment, author, date_public) VALUES (?, ?, ?)");
         $req->execute(array($comment, $authorId, time()));
         return $this;
     }
@@ -20,7 +20,7 @@ class Comments extends Mysql {
      * @return bool|mixed
      */
     public function readComments($commentId) {
-        $req = parent::_getConnection()->prepare("SELECT * FROM comments WHERE id = ?");
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM comments WHERE id = ?");
         $req->execute(array($commentId));
         if ($req->rowCount() > 0) {
             return $req->fetch();
@@ -34,7 +34,7 @@ class Comments extends Mysql {
      * @return bool
      */
     public function deleteComment($commentId) {
-        $req = parent::_getConnection()->prepare("DELETE FROM comments WHERE id = ?");
+        $req = Mysql::_getConnection()->prepare("DELETE FROM comments WHERE id = ?");
         $req->execute(array($commentId));
         if ($req->rowCount() > 0) {
             return true;
@@ -49,7 +49,7 @@ class Comments extends Mysql {
      * @return bool
      */
     public function updateComment($comment, $commentId) {
-        $req = parent::_getConnection()->prepare("UPDATE comments SET comment = ? WHERE id = ?");
+        $req = Mysql::_getConnection()->prepare("UPDATE comments SET comment = ? WHERE id = ?");
         $req->execute(array($comment, $commentId));
         if ($req->rowCount() > 0) {
             return true;
@@ -64,7 +64,7 @@ class Comments extends Mysql {
      * @return $this
      */
     public function signalComment($commentId, $authorId) {
-        $req = parent::_getConnection()->prepare("INSERT INTO signal (commentId, flagmanId, date_signal) VALUES (?, ?, ?)");
+        $req = Mysql::_getConnection()->prepare("INSERT INTO signal (commentId, flagmanId, date_signal) VALUES (?, ?, ?)");
         $req->execute(array($commentId, $authorId, time()));
         return $this;
     }

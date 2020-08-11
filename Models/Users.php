@@ -21,9 +21,9 @@ class Users extends Mysql {
         if ($password === $confirmPassword) {
             if (strlen($password) >= self::MIN_PASSWORD_LENGTH) {
                 if (!$this->_userExist($email)) {
-                    $req = parent::_getConnection()->prepare("INSERT INTO users (email, username, password, register_date) VALUES (?, ?, ?, ?)");
+                    $req = Mysql::_getConnection()->prepare("INSERT INTO users (email, username, password, register_date) VALUES (?, ?, ?, ?)");
                     $req->execute(array($email, $username, sha1($password), time()));
-                    return true;
+                    return false;
                 }
                 return "Cette adresse mail existe déjà";
             }
@@ -38,7 +38,7 @@ class Users extends Mysql {
      * @return bool
      */
     protected function _userExist($email) {
-        $req = parent::_getConnection()->prepare("SELECT * FROM users WHERE email = ?");
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM users WHERE email = ?");
         $req->execute(array($email));
         if ($req->rowCount() > 0) {
             return true;
@@ -54,11 +54,11 @@ class Users extends Mysql {
      */
     public function login($email, $password) {
         if ($this->_userExist($email)) {
-            $req = parent::_getConnection()->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+            $req = Mysql::_getConnection()->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
             $req->execute(array($email, sha1($password)));
             if ($req->rowCount() > 0) {
                 $loginInformation = $req->fetch();
-                parent::_setIsLogin(
+                Mysql::_setIsLogin(
                     true,
                     [
                         $loginInformation['id'],
@@ -89,7 +89,7 @@ class Users extends Mysql {
      * @return bool
      */
     public function isAdmin($userId) {
-        $req = parent::_getConnection()->prepare("SELECT * FROM users WHERE id = ? AND admin = ?");
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM users WHERE id = ? AND admin = ?");
         $req->execute(array($userId, 1));
         if ($req->rowCount() > 0) {
             return true;

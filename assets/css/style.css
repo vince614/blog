@@ -102,13 +102,108 @@ ACCOUNT PAGE
     justify-content: center;
     margin: 100px auto;
     width: 100%;
-    height: 100%;
 }
 
 .accountContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-top: 50px;
+    width: 90%;
+    align-items: center;
+}
+
+.loginContainer {
+    display: flex;
+    flex: .5;
+    flex-direction: column;
+}
+
+.registerContainer {
+    display: flex;
+    flex: .5;
+    flex-direction: column;
+}
+
+.accountTitle {
+    margin: 0 auto;
+}
+
+.formContainer {
+    padding: 20px;
+    width: 650px;
+    margin: 100px auto 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    background-color: rgba(255, 255, 255, .05);
+    border-radius: 10px;
+}
+
+.formSection {
+    margin-bottom: 30px;
+}
+
+.formSectionTitle[isRequired="true"]:after {
+    content: '*';
+    color: rgb(180, 10, 10);
+}
+
+.formSelection {
+    margin-top: 10px;
+    width: 200px;
+    height: 30px;
+    border: 2px solid grey;
+    padding-left: 5px;
+    background-color: transparent;
+    color: rgb(170, 170, 170);
+    font-size: 15px;
+}
+
+.formSelection option {
+    background-color: #18191C;
+}
+
+.tagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.tagContainer p {
+    margin-right: 10px;
+    margin-top: 10px;
+    background-color: #7f83d7;
+    padding: 3px 5px;
+    min-width: 80px;
+    color: white;
+    text-align: center;
+}
+
+.input {
+    margin-top: 10px;
+    width: 100%;
+    height: 35px;
+    background-color: rgba(0, 0, 0, .10);
+    border: 2px solid gray;
+    font-size: 15px;
+    padding-left: 10px;
+    color: white;
+}
+
+.help {
+    margin-top: 10px;
+    color: gray;
+    font-size: 12px;
+}
+
+.buttonContainer {
+    display: flex;
+    background-color: #7f83d7;
+    color: white;
+    width: fit-content;
+    padding: 5px 20px;
+    border-radius: 3px;
+    margin: 0 auto;
+    cursor: pointer;
 }
 
 

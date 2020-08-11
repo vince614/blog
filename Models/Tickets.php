@@ -8,7 +8,7 @@ class Tickets extends Mysql {
      * @param $author
      */
     public function createTicket($ticketInformation, $author) {
-        $req = parent::_getConnection()->prepare("INSERT INTO tickets (title, content, author, date_public) VALUES (?, ?, ?, ?)");
+        $req = Mysql::_getConnection()->prepare("INSERT INTO tickets (title, content, author, date_public) VALUES (?, ?, ?, ?)");
         $req->execute(array($ticketInformation[0], $ticketInformation[1], $author, time()));
     }
 
@@ -18,7 +18,7 @@ class Tickets extends Mysql {
      * @return mixed
      */
     public function readTicket($ticketId) {
-        $req = parent::_getConnection()->prepare("SELECT * FROM tickets WHERE id = ?");
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM tickets WHERE id = ?");
         $req->execute(array($ticketId));
         return $req->fetch();
     }
@@ -30,7 +30,7 @@ class Tickets extends Mysql {
      * @return tickets
      */
     public function updateTicket($ticketInformation, $ticketId) {
-        $req = parent::_getConnection()->prepare("UPDATE tickets SET title = ?, content = ? WHERE id = ?");
+        $req = Mysql::_getConnection()->prepare("UPDATE tickets SET title = ?, content = ? WHERE id = ?");
         $req->execute(array($ticketInformation[0], $ticketInformation[1], $ticketId));
         return $this;
     }
@@ -41,7 +41,7 @@ class Tickets extends Mysql {
      * @return tickets
      */
     public function deleteTicket($ticketId) {
-        $req = parent::_getConnection()->prepare('DELETE FROM tickets WHERE id = ?');
+        $req = Mysql::_getConnection()->prepare('DELETE FROM tickets WHERE id = ?');
         $req->execute(array($ticketId));
         return $this;
     }

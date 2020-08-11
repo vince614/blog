@@ -5,11 +5,23 @@
  */
 class AccountController extends Controller
 {
+
+    /**
+     * User model path
+     */
+    const USER_MODEL_PATH = 'Models/Users.php';
+
     /**
      * Model instance
      * @var $_accountManager
      */
     private $_accountManager;
+
+    /**
+     * Errors
+     * @var array
+     */
+    public $errors = [];
 
     /**
      * AccountController constructor.
@@ -38,7 +50,7 @@ class AccountController extends Controller
      * Init model connection
      */
     private function initModel() {
-        require_once 'Models/Users.php';
+        require_once self::USER_MODEL_PATH;
         $this->_accountManager = new Users();
     }
 
@@ -46,6 +58,24 @@ class AccountController extends Controller
      * Execute before rendering
      */
     private function _beforeRender() {
-        // CODE HERE
+        $request = $this->getPostRequest();
+        var_dump($request);
+        if ($request) {
+            $data = [
+                $request['email'],
+                $request['username'],
+                $request['password'],
+                $request['confirmPassword']
+            ];
+            $this->_accountManager->register($data) ? $this->errors[] = $this->_accountManager->register($data) : true;
+        }
+    }
+
+    /**
+     * Return request
+     * @return mixed
+     */
+    private function getPostRequest() {
+        return $_POST;
     }
 }

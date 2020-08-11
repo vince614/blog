@@ -3,10 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8, minimum-scale=0.8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- UIkit CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/css/uikit.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
 </head>
 <body>
 <div class="navBar">
@@ -19,102 +18,139 @@
         <a class="regularText" href="#">Login</a>
     </div>
 </div>
-
-<div class="uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade" uk-height-viewport>
-    <div class="uk-width-1-1">
-        <div class="uk-container">
-            <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
-                <div class="uk-width-1-1@m">
-                    <form class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large">
-                        <ul class="uk-tab uk-flex-center" uk-grid uk-switcher="animation: uk-animation-fade">
-                            <li><a href="#">Sign Up</a></li>
-                            <li><a href="#">Log In</a></li>
-                            <li class="uk-hidden">Forgot Password?</li>
-                        </ul>
-                        <ul class="uk-switcher uk-margin">
-                            <li>
-                                <h3 class="uk-card-title uk-text-center">Sign up today. It's free!</h3>
-                                <form>
-                                    <div class="uk-margin">
-                                        <div class="uk-inline uk-width-1-1">
-                                            <span class="uk-form-icon" uk-icon="icon: user"></span>
-                                            <input class="uk-input uk-form-large" type="text" placeholder="Username">
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <div class="uk-inline uk-width-1-1">
-                                            <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                                            <input class="uk-input uk-form-large" type="text" placeholder="Email address">
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <div class="uk-inline uk-width-1-1">
-                                            <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                                            <input class="uk-input uk-form-large" type="password" placeholder="Set a password">
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                        <label><input class="uk-checkbox" type="checkbox"> I agree the Terms and Conditions.</label>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <button class="uk-button uk-button-primary uk-button-large uk-width-1-1">Login</button>
-                                    </div>
-                                    <div class="uk-text-small uk-text-center">
-                                        Already have an account? <a href="#" uk-switcher-item="1">Log in</a>
-                                    </div>
-                                </form>
-                            </li>
-                            <li>
-                                <h3 class="uk-card-title uk-text-center">Welcome back!</h3>
-                                <form>
-                                    <div class="uk-margin">
-                                        <div class="uk-inline uk-width-1-1">
-                                            <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                                            <input class="uk-input uk-form-large" type="text" placeholder="Email address">
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <div class="uk-inline uk-width-1-1">
-                                            <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                                            <input class="uk-input uk-form-large" type="password" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin uk-text-right@s uk-text-center uk-text-small">
-                                        <a href="#" uk-switcher-item="2">Forgot Password?</a>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <button class="uk-button uk-button-primary uk-button-large uk-width-1-1">Login</button>
-                                    </div>
-                                    <div class="uk-text-small uk-text-center">
-                                        Not registered? <a href="#" uk-switcher-item="0">Create an account</a>
-                                    </div>
-                                </form>
-                            </li>
-                            <li>
-                                <h3 class="uk-card-title uk-text-center">Forgot your password?</h3>
-                                <p class="uk-text-center uk-width-medium@s uk-margin-auto">Enter your email address and we will send you a link to reset your password.</p>
-                                <form>
-                                    <div class="uk-margin">
-                                        <div class="uk-inline uk-width-1-1">
-                                            <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                                            <input class="uk-input uk-form-large" type="text" placeholder="Email address">
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <button class="uk-button uk-button-primary uk-button-large uk-width-1-1">Send Email</button>
-                                    </div>
-                                    <div class="uk-text-small uk-text-center">
-                                        <a href="#" uk-switcher-item="1">Back to login</a>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
+<div class="pageContainer">
+    <div class="accountContainer">
+        <div class="loginContainer">
+            <h1 class="regularText accountTitle">
+                Connexion
+            </h1>
+            <div class="formContainer">
+                <div class="formSection">
+                    <h2 class="formSectionTitle regularText" isRequired="true">
+                        Identifiant
+                    </h2>
+                    <input id="l-email" class="input" type="text"/>
+                    <p class="help">
+                        Entrez votre adresse mail ou votre nom d'utilisateur.
+                    </p>
+                </div>
+                <div class="formSection">
+                    <h2 class="formSectionTitle regularText" isRequired="true">
+                        Mot de passe
+                    </h2>
+                    <input id="l-password" class="input" type="password"/>
+                </div>
+                <div id="button-login" class="buttonContainer">
+                    Se connecter
+                </div>
+            </div>
+        </div>
+        <div class="registerContainer">
+            <h1 class="regularText accountTitle">
+                Enregistrement
+            </h1>
+            <div class="formContainer">
+                <div class="formSection">
+                    <h2 class="formSectionTitle regularText" isRequired="true">
+                        Adresse mail
+                    </h2>
+                    <input id="r-email" class="input" type="email">
+                </div>
+                <div class="formSection">
+                    <h2 class="formSectionTitle regularText" isRequired="true">
+                        Nom d'utilisateur
+                    </h2>
+                    <input id="r-username" class="input" type="text">
+                </div>
+                <div class="formSection">
+                    <h2 class="formSectionTitle regularText" isRequired="true">
+                        Mot de passe
+                    </h2>
+                    <input id="r-password" class="input" type="password">
+                </div>
+                <div class="formSection">
+                    <h2 class="formSectionTitle regularText" isRequired="true">
+                        Confirmez votre mot de passe
+                    </h2>
+                    <input id="r-confirmPassword" class="input" type="password">
+                </div>
+                <div id="button-register" class="buttonContainer">
+                    S'enregistrer
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
+<script>
+    /**
+     * Login
+     **/
+    $('#button-login').click(function () {
+        let email = $('#l-email').val();
+        let password = $('#l-password').val();
+        if (email && password) {
+            // Post data
+            $.post('account',
+                {
+                    email: email,
+                    password: password
+                },
+                function (data) {
+                    console.log(data);
+                }
+            );
+            return;
+        }
+        return errorMessage('Merci de bien vouloir remplir tous les champs.');
+    });
+
+    /**
+     * Register
+     **/
+    $('#button-register').click(function() {
+        // Datas
+        let email = $('#r-email').val();
+        let username = $('#r-username').val();
+        let password = $('#r-password').val();
+        let confirmPassword = $('#r-confirmPassword').val();
+
+        // Conditions
+        if (email && username && password && confirmPassword) {
+            if (validateEmail(email)) {
+                if (password === confirmPassword) {
+                    return;
+                }
+                return errorMessage('Vos deux mot de passe ne correspondent pas.');
+            }
+            return errorMessage('Veuillez entrer une adresse mail valide.');
+        }
+        return errorMessage('Veuillez remplir tout les champs.');
+    });
+
+    /**
+     * Validate email with regex test
+     * @param email
+     * @return {boolean}
+     */
+    function validateEmail(email) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    /**
+     * Send error notifications
+     * @param msg
+     * @return {*}
+     */
+    function errorMessage(msg) {
+        return Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: msg
+        })
+    }
+</script>
 </body>
 </html>
