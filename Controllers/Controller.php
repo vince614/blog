@@ -20,12 +20,26 @@ class Controller
     protected function render($view)
     {
         extract($this->vars);
+
+        /**
+         * Include nav bar
+         */
+        require 'Views/blocks/navBar.phtml';
+
+        /**
+         * Include template views
+         */
         $viewFile = 'Views/' . str_replace('.', '/', $view) . '.phtml';
         if (file_exists($viewFile)) {
             require $viewFile;
-            return;
+        }else {
+            $this->notFound();
         }
-        $this->notFound();
+
+        /**
+         * Include end of file
+         */
+        require 'Views/blocks/endPage.phtml';
     }
 
     /**
