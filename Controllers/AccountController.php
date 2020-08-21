@@ -130,7 +130,7 @@ class AccountController extends Controller
      * @return string
      */
     public function getUsername() {
-        return $_SESSION['user']['username'];
+        return ucfirst($_SESSION['user']['username']);
     }
 
     /**

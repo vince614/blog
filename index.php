@@ -1,5 +1,8 @@
 <?php
 
+// Start session
+session_start();
+
 /**
  * Require class
  * @TODO MAKE AUTOLOAD
@@ -23,6 +26,20 @@ $router->get('/account', function () {});
 $router->post('/account', function () {});
 $router->get('/tickets', function () {  echo "Ensemble des tickets"; });
 $router->get('/tickets/:id', function ($idTicket) {  echo "Vous êtes actuellement sur le ticket " . $idTicket; });
+
+// Logout route
+$router->get('/logout', function () {
+    if (!empty($_SESSION)) {
+        // Destroy session
+        $_SESSION = array();
+        session_destroy();
+        // Delete cookies
+        setcookie('login', null);
+        setcookie('pass_hache', null);
+    }
+    // Redirect
+    header('Location: ./account');
+});
 
 
 // Run

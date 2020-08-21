@@ -1,7 +1,17 @@
 <div class="pageContainer">
-    <div class="accountContainer">
-        <?php // Check if user is logging ?>
-        <?php if(!$this->isLogin()): ?>
+    <?php // Check if user is logging ?>
+    <?php if($this->isLogin()): ?>
+        <div class="profileContainer">
+            <div class="profileCard">
+                <div class="profileAvatar">
+                    <img src="assets/avatar/avatar.png">
+                </div>
+                <h2 class="regularText"><?php echo $this->getUsername(); ?></h2>
+                <a href="logout" class="buttonContainer logout">Déconnexion</a>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="accountContainer">
             <div class="loginContainer">
                 <h1 class="regularText accountTitle">
                     Connexion
@@ -9,12 +19,9 @@
                 <div class="formContainer">
                     <div class="formSection">
                         <h2 class="formSectionTitle regularText" isRequired="true">
-                            Identifiant
+                            Adresse mail
                         </h2>
                         <input id="l-email" class="input" type="text"/>
-                        <p class="help">
-                            Entrez votre adresse mail ou votre nom d'utilisateur.
-                        </p>
                     </div>
                     <div class="formSection">
                         <h2 class="formSectionTitle regularText" isRequired="true">
@@ -49,6 +56,9 @@
                             Mot de passe
                         </h2>
                         <input id="r-password" class="input" type="password">
+                        <p class="help">
+                            Votre mot de passe doit contenir au moins 7 caractères.
+                        </p>
                     </div>
                     <div class="formSection">
                         <h2 class="formSectionTitle regularText" isRequired="true">
@@ -61,10 +71,8 @@
                     </div>
                 </div>
             </div>
-        <?php else: ?>
-            <?php // User login ?>
-        <?php endif; ?>
-    </div>
+        </div>
+    <?php endif; ?>
 </div>
 <script>
     /**
@@ -82,7 +90,7 @@
                 },
                 function (msg) {
                     if (msg) return errorMessage(msg);
-                    return successMessage('Vous êtes désormais connecté.');
+                    location.reload();
                 }
             );
         }
