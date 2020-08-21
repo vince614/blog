@@ -20,6 +20,7 @@ $router = new Router($abstract->getUrl());
 $router->get('/', function () {  echo "Bienvenue sur la page d'accueil"; });
 $router->get('/register', function () {  echo "Bienvenue sur la page de création de compte"; });
 $router->get('/account', function () {});
+$router->post('/account', function () {});
 $router->get('/tickets', function () {  echo "Ensemble des tickets"; });
 $router->get('/tickets/:id', function ($idTicket) {  echo "Vous êtes actuellement sur le ticket " . $idTicket; });
 

@@ -18,6 +18,12 @@ class AccountController extends Controller
     private $_accountManager;
 
     /**
+     * Callback message
+     * @var array
+     */
+    private $results = [];
+
+    /**
      * Errors
      * @var array
      */
@@ -59,15 +65,31 @@ class AccountController extends Controller
      */
     private function _beforeRender() {
         $request = $this->getPostRequest();
-        var_dump($request);
         if ($request) {
-            $data = [
-                $request['email'],
-                $request['username'],
-                $request['password'],
-                $request['confirmPassword']
-            ];
-            $this->_accountManager->register($data) ? $this->errors[] = $this->_accountManager->register($data) : true;
+            /**
+             * Get request type
+             * If is login or register
+             */
+            if ($request['type'] === "login") {
+                $result = $this->_accountManager->login(
+                    $request['email'],
+                    $request['password']
+                );
+            }else {
+                $result = $this->_accountManager->register(
+                    $request['email'],
+                    $request['username'],
+                    $request['password'],
+                    $request['confirmPassword']
+                );
+            }
+            /**
+             * If error message
+             */
+            if ($result) {
+                echo $result;
+            }
+            exit;
         }
     }
 

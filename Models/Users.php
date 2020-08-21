@@ -9,15 +9,13 @@ class Users extends Mysql {
 
     /**
      * Register account
-     * @param $userInformations
+     * @param $email
+     * @param $username
+     * @param $password
+     * @param $confirmPassword
      * @return string|bool
      */
-    public function register($userInformations) {
-        $email = $userInformations[0];
-        $username = $userInformations[1];
-        $password = $userInformations[2];
-        $confirmPassword = $userInformations[3];
-
+    public function register($email, $username, $password, $confirmPassword) {
         if ($password === $confirmPassword) {
             if (strlen($password) >= self::MIN_PASSWORD_LENGTH) {
                 if (!$this->_userExist($email)) {
@@ -66,7 +64,7 @@ class Users extends Mysql {
                         $loginInformation['username'],
                         $loginInformation['register_date']
                     ]);
-                return true;
+                return false;
             }
             return "Le mot de passe n'est pas correct. Veuillez réessayer";
         }
