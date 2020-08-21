@@ -1,64 +1,69 @@
 <div class="pageContainer">
     <div class="accountContainer">
-        <div class="loginContainer">
-            <h1 class="regularText accountTitle">
-                Connexion
-            </h1>
-            <div class="formContainer">
-                <div class="formSection">
-                    <h2 class="formSectionTitle regularText" isRequired="true">
-                        Identifiant
-                    </h2>
-                    <input id="l-email" class="input" type="text"/>
-                    <p class="help">
-                        Entrez votre adresse mail ou votre nom d'utilisateur.
-                    </p>
-                </div>
-                <div class="formSection">
-                    <h2 class="formSectionTitle regularText" isRequired="true">
-                        Mot de passe
-                    </h2>
-                    <input id="l-password" class="input" type="password"/>
-                </div>
-                <div id="button-login" class="buttonContainer">
-                    Se connecter
-                </div>
-            </div>
-        </div>
-        <div class="registerContainer">
-            <h1 class="regularText accountTitle">
-                Enregistrement
-            </h1>
-            <div class="formContainer">
-                <div class="formSection">
-                    <h2 class="formSectionTitle regularText" isRequired="true">
-                        Adresse mail
-                    </h2>
-                    <input id="r-email" class="input" type="email">
-                </div>
-                <div class="formSection">
-                    <h2 class="formSectionTitle regularText" isRequired="true">
-                        Nom d'utilisateur
-                    </h2>
-                    <input id="r-username" class="input" type="text">
-                </div>
-                <div class="formSection">
-                    <h2 class="formSectionTitle regularText" isRequired="true">
-                        Mot de passe
-                    </h2>
-                    <input id="r-password" class="input" type="password">
-                </div>
-                <div class="formSection">
-                    <h2 class="formSectionTitle regularText" isRequired="true">
-                        Confirmez votre mot de passe
-                    </h2>
-                    <input id="r-confirmPassword" class="input" type="password">
-                </div>
-                <div id="button-register" class="buttonContainer">
-                    S'enregistrer
+        <?php // Check if user is logging ?>
+        <?php if(!$this->isLogin()): ?>
+            <div class="loginContainer">
+                <h1 class="regularText accountTitle">
+                    Connexion
+                </h1>
+                <div class="formContainer">
+                    <div class="formSection">
+                        <h2 class="formSectionTitle regularText" isRequired="true">
+                            Identifiant
+                        </h2>
+                        <input id="l-email" class="input" type="text"/>
+                        <p class="help">
+                            Entrez votre adresse mail ou votre nom d'utilisateur.
+                        </p>
+                    </div>
+                    <div class="formSection">
+                        <h2 class="formSectionTitle regularText" isRequired="true">
+                            Mot de passe
+                        </h2>
+                        <input id="l-password" class="input" type="password"/>
+                    </div>
+                    <div id="button-login" class="buttonContainer">
+                        Se connecter
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="registerContainer">
+                <h1 class="regularText accountTitle">
+                    Enregistrement
+                </h1>
+                <div class="formContainer">
+                    <div class="formSection">
+                        <h2 class="formSectionTitle regularText" isRequired="true">
+                            Adresse mail
+                        </h2>
+                        <input id="r-email" class="input" type="email">
+                    </div>
+                    <div class="formSection">
+                        <h2 class="formSectionTitle regularText" isRequired="true">
+                            Nom d'utilisateur
+                        </h2>
+                        <input id="r-username" class="input" type="text">
+                    </div>
+                    <div class="formSection">
+                        <h2 class="formSectionTitle regularText" isRequired="true">
+                            Mot de passe
+                        </h2>
+                        <input id="r-password" class="input" type="password">
+                    </div>
+                    <div class="formSection">
+                        <h2 class="formSectionTitle regularText" isRequired="true">
+                            Confirmez votre mot de passe
+                        </h2>
+                        <input id="r-confirmPassword" class="input" type="password">
+                    </div>
+                    <div id="button-register" class="buttonContainer">
+                        S'enregistrer
+                    </div>
+                </div>
+            </div>
+        <?php else: ?>
+            <?php // User login ?>
+        <?php endif; ?>
     </div>
 </div>
 <script>

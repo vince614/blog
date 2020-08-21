@@ -100,4 +100,44 @@ class AccountController extends Controller
     private function getPostRequest() {
         return $_POST;
     }
+
+    /**
+     * Check if loging
+     * @return bool
+     */
+    public function isLogin() {
+        return isset($_SESSION['user']);
+    }
+
+    /**
+     * Get user id
+     * @return int
+     */
+    public function getUserId() {
+        return $_SESSION['user']['id'];
+    }
+
+    /**
+     * Get user email
+     * @return string
+     */
+    public function getEmail() {
+        return $_SESSION['user']['email'];
+    }
+
+    /**
+     * Get username
+     * @return string
+     */
+    public function getUsername() {
+        return $_SESSION['user']['username'];
+    }
+
+    /**
+     * Get user registration date
+     * @return int
+     */
+    public function getRegisterDate() {
+        return $_SESSION['user']['register_date'];
+    }
 }

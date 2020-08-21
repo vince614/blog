@@ -9,12 +9,6 @@ class Mysql {
     private $_pdo;
 
     /**
-     * Login flag
-     * @var bool
-     */
-    protected $_isLogin = false;
-
-    /**
      * Mysql constructor.
      */
     public function __construct()
@@ -45,20 +39,10 @@ class Mysql {
     }
 
     /**
-     * Get login flag
-     * @return bool
-     */
-    protected function _getIsLogin() {
-        return $this->_isLogin;
-    }
-
-    /**
      * Set login flag
-     * @param $flag
      * @param $informations
      */
-    protected function _setIsLogin($flag, $informations) {
-        $this->_isLogin = $flag;
+    protected function _setIsLogin($informations) {
         $_SESSION['user'] = [
             'id' => $informations[0],
             'email' => $informations[1],

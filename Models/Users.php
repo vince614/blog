@@ -57,7 +57,6 @@ class Users extends Mysql {
             if ($req->rowCount() > 0) {
                 $loginInformation = $req->fetch();
                 Mysql::_setIsLogin(
-                    true,
                     [
                         $loginInformation['id'],
                         $loginInformation['email'],
