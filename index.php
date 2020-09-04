@@ -4,8 +4,7 @@
 session_start();
 
 /**
- * Require class
- * @TODO MAKE AUTOLOAD
+ * Required class
  */
 require_once "Abstract.php";
 require_once "Router/Router.php";
@@ -19,15 +18,35 @@ $abstract = new Core_Abstract();
 // Get router url
 $router = new Router($abstract->getUrl());
 
-// Get routes
-$router->get('/', function () {  echo "Bienvenue sur la page d'accueil"; });
-$router->get('/register', function () {  echo "Bienvenue sur la page de création de compte"; });
-$router->get('/account', function () {});
-$router->post('/account', function () {});
-$router->get('/tickets', function () {  echo "Ensemble des tickets"; });
-$router->get('/tickets/:id', function ($idTicket) {  echo "Vous êtes actuellement sur le ticket " . $idTicket; });
+/**
+ * Home route
+ * @GET route
+ */
+$router->get('/', function () {});
 
-// Logout route
+/**
+ * Create account & login
+ * @POST & @GET routes
+ */
+$router->post('/account', function () {});
+$router->get('/account', function () {});
+
+/**
+ * All chapters
+ * @GET route
+ */
+$router->get('/chapters', function () {  echo "Ensemble des tickets"; });
+
+/**
+ * Get chapter by ID
+ * @GET route
+ */
+$router->get('/chapter/:id', function ($idTicket) {  echo "Vous êtes actuellement sur le ticket " . $idTicket; });
+
+/**
+ * Logout route
+ * @GET route
+ */
 $router->get('/logout', function () {
     if (!empty($_SESSION)) {
         // Destroy session

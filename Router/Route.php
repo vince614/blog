@@ -76,7 +76,13 @@ class Route
     private function load() {
         require_once 'Models/Mysql.php';
 
+        // Home controller
+        if ($this->path === "") {
+            $this->path = "home";
+        }
+
         $controller = ucfirst($this->path);
+
         $controllerClass = $controller . "Controller";
         $controllerFile = "Controllers/" . $controllerClass . '.php';
 

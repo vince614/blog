@@ -69,4 +69,12 @@ class Controller
         header('HTTP/1.0 403 Forbidden');
         die('Accès interdit');
     }
+
+    /**
+     * Check if user is logged
+     * @return bool
+     */
+    public function isLogin() {
+        return isset($_SESSION['user']);
+    }
 }

@@ -102,14 +102,6 @@ class AccountController extends Controller
     }
 
     /**
-     * Check if loging
-     * @return bool
-     */
-    public function isLogin() {
-        return isset($_SESSION['user']);
-    }
-
-    /**
      * Get user id
      * @return int
      */
