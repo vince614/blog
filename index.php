@@ -45,9 +45,10 @@ $router->get('/chapters/:id', function ($idTicket) {  echo "Vous êtes actuellem
 
 /**
  * Add new chapter
- * @GET route
+ * @GET & @POST route
  */
 $router->get('/new', function () {});
+$router->post('/new', function () {});
 
 /**
  * Logout route

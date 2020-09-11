@@ -4,12 +4,14 @@ class Tickets extends Mysql {
 
     /**
      * Create ticket
-     * @param $ticketInformation
+     * @param $title
+     * @param $chapter
+     * @param $content
      * @param $author
      */
-    public function createTicket($ticketInformation, $author) {
-        $req = Mysql::_getConnection()->prepare("INSERT INTO tickets (title, content, author, date_public) VALUES (?, ?, ?, ?)");
-        $req->execute(array($ticketInformation[0], $ticketInformation[1], $author, time()));
+    public function createTicket($title, $chapter, $content, $author) {
+        $req = Mysql::_getConnection()->prepare("INSERT INTO tickets (title, content, chapter, author, date_public) VALUES (?, ?, ?, ?, ?)");
+        $req->execute(array($title, $chapter, $content, $author, time()));
     }
 
     /**

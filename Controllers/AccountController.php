@@ -94,46 +94,6 @@ class AccountController extends Controller
     }
 
     /**
-     * Return request
-     * @return mixed
-     */
-    private function getPostRequest() {
-        return $_POST;
-    }
-
-    /**
-     * Get user id
-     * @return int
-     */
-    public function getUserId() {
-        return $_SESSION['user']['id'];
-    }
-
-    /**
-     * Get user email
-     * @return string
-     */
-    public function getEmail() {
-        return $_SESSION['user']['email'];
-    }
-
-    /**
-     * Get username
-     * @return string
-     */
-    public function getUsername() {
-        return ucfirst($_SESSION['user']['username']);
-    }
-
-    /**
-     * Get user registration date
-     * @return int
-     */
-    public function getRegisterDate() {
-        return $_SESSION['user']['register_date'];
-    }
-
-    /**
      * Check if user is admin
      * @return bool
      */

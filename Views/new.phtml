@@ -1,0 +1,91 @@
+<div class="newContainer">
+    <div class="formContainer" style="width: 70%;">
+        <div class="formSection">
+            <h2 class="formSectionTitle regularText" isRequired="true">
+                Titre du chapitre
+            </h2>
+            <input id="chapterTitle" class="input" type="text">
+        </div>
+        <div class="formSection">
+            <h2 class="formSectionTitle regularText" isRequired="true">
+                Chapitre
+            </h2>
+            <select id="chapterNumber" class="formSelection">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <div class="formSection">
+            <h2 class="formSectionTitle regularText" isRequired="true">
+                Contenu
+            </h2>
+            <textarea id="chapterContent" class="textarea"></textarea>
+            <p class="help">
+                - Vous pouvez utiliser les <a class="regularText" href='https://parsedown.org/tests/'>HTML markdowns</a>
+                <br>
+                - Exemple: **<strong>strong</strong>**, *<em>italic</em>*, `<code>code</code>`
+            </p>
+        </div>
+        <div id="publish" class="buttonContainer">
+            Publier
+        </div>
+    </div>
+</div>
+<script>
+
+    // Publish action
+    $('#publish').click(() => {
+        let chapterTitle = $('#chapterTitle').val();
+        let chapterNumber = $('#chapterNumber').val();
+        let chapterContent = $('#chapterContent').val();
+        if (chapterTitle && chapterNumber && chapterContent) {
+            $.post('new',
+                {
+                    chapterTitle: chapterTitle,
+                    chapterNumber: chapterNumber,
+                    chapterContent: chapterContent,
+                    author: '<?php echo $this->getUsername(); ?>'
+                },
+                function (msg) {
+                    if (msg) return errorMessage(msg);
+                    return successMessage('Le chapitre à bien été ajouté');
+                }
+            );
+        }
+        return errorMessage('Merci de remplir tout les champs.');
+    });
+
+    /**
+     * Send error notifications
+     * @param msg
+     * @return {*}
+     */
+    function errorMessage(msg) {
+        return Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: msg
+        })
+    }
+
+    /**
+     * Send success notifications
+     * @param msg
+     * @return {*}
+     */
+    function successMessage(msg) {
+        return Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: msg
+        })
+    }
+</script>
