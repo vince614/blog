@@ -132,4 +132,13 @@ class AccountController extends Controller
     public function getRegisterDate() {
         return $_SESSION['user']['register_date'];
     }
+
+    /**
+     * Check if user is admin
+     * @return bool
+     */
+    public function isAdmin() {
+        $userId = $this->getUserId();
+        return $this->_accountManager->isAdmin($userId);
+    }
 }

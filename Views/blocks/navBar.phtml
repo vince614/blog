@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/tooltip.css">
     <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
@@ -15,8 +16,12 @@
             <a class="regularText" href="/">Jean Forteroche</a>
         </div>
         <div class="navBarRight">
-            <a class="regularText" href="./">Accueil</a>
-            <a class="regularText" href="./chapters">Chapitres</a>
-            <a class="regularText" href="./account">Connexion</a>
+            <a href="./">Accueil</a>
+            <a href="./chapters">Chapitres</a>
+            <?php if ($this->isLogin()): ?>
+                <a href="./account">Mon compte</a>
+            <?php else: ?>
+                <a href="./account">Connexion</a>
+            <?php endif; ?>
         </div>
     </div>

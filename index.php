@@ -44,6 +44,12 @@ $router->get('/chapters', function () {  echo "Ensemble des chapitres"; });
 $router->get('/chapters/:id', function ($idTicket) {  echo "Vous êtes actuellement sur le ticket " . $idTicket; });
 
 /**
+ * Add new chapter
+ * @GET route
+ */
+$router->get('/new', function () {});
+
+/**
  * Logout route
  * @GET route
  */
