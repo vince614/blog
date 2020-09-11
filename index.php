@@ -35,13 +35,13 @@ $router->get('/account', function () {});
  * All chapters
  * @GET route
  */
-$router->get('/chapters', function () {  echo "Ensemble des tickets"; });
+$router->get('/chapters', function () {  echo "Ensemble des chapitres"; });
 
 /**
  * Get chapter by ID
  * @GET route
  */
-$router->get('/chapter/:id', function ($idTicket) {  echo "Vous êtes actuellement sur le ticket " . $idTicket; });
+$router->get('/chapters/:id', function ($idTicket) {  echo "Vous êtes actuellement sur le ticket " . $idTicket; });
 
 /**
  * Logout route
