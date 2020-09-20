@@ -397,6 +397,7 @@ CHAPTERS
     align-items: center;
     width: 100%;
     min-height: 50vh;
+    flex-wrap: wrap;
 }
 
 .chapterCard {
@@ -404,10 +405,13 @@ CHAPTERS
     display: flex;
     width: 800px;
     height: 250px;
-    background-color: #2c3e50;
     align-items: center;
     overflow: hidden;
     cursor: pointer;
+    margin: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .capterCardBackground {

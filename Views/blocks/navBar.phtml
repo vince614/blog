@@ -4,11 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.8, minimum-scale=0.8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/tooltip.css">
-    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="<?php echo $this->getHost() ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo $this->getHost() ?>/assets/css/tooltip.css">
+    <link rel="stylesheet" href="<?php echo $this->getHost() ?>/node_modules/sweetalert2/dist/sweetalert2.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
+    <script src="<?php echo $this->getHost() ?>/node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
 </head>
 <body>
     <div class="navBar">
@@ -16,12 +16,12 @@
             <a class="regularText" href="/">Jean Forteroche</a>
         </div>
         <div class="navBarRight">
-            <a href="./">Accueil</a>
-            <a href="./chapters">Chapitres</a>
+            <a href="<?php echo $this->getHost() ?>">Accueil</a>
+            <a href="<?php echo $this->getHost() ?>/chapters">Chapitres</a>
             <?php if ($this->isLogin()): ?>
-                <a href="./account">Mon compte</a>
+                <a href="<?php echo $this->getHost() ?>/account">Mon compte</a>
             <?php else: ?>
-                <a href="./account">Connexion</a>
+                <a href="<?php echo $this->getHost() ?>/account">Connexion</a>
             <?php endif; ?>
         </div>
     </div>

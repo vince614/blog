@@ -3,7 +3,7 @@
 /**
  * Class Controller
  */
-class Controller
+class Controller extends Core_Abstract
 {
 
     /**

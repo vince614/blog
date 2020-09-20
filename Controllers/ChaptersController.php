@@ -10,7 +10,7 @@ class ChaptersController extends Controller
 
     /**
      * Model instance
-     * @var $_ticketsManager
+     * @var $_ticketsManager Tickets
      */
     private $_ticketsManager;
 
@@ -27,7 +27,8 @@ class ChaptersController extends Controller
      * Index
      * @param $path
      */
-    public function index($path) {
+    public function index($path)
+    {
         if (!isset($path)) {
             $this->notFound();
             return;
@@ -40,7 +41,8 @@ class ChaptersController extends Controller
     /**
      * Init model connection
      */
-    private function initModel() {
+    private function initModel()
+    {
         require_once self::TICKETS_MODEL_PATH;
         $this->_ticketsManager = new Tickets();
     }
@@ -48,8 +50,10 @@ class ChaptersController extends Controller
     /**
      * Before render
      */
-    private function _beforeRender() {
-
+    private function _beforeRender()
+    {
+        $tickets = $this->_ticketsManager->fetchTickets();
+        $this->setVar('tickets', $tickets);
     }
 
 }

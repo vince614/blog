@@ -8,6 +8,17 @@
         </div>
         <div class="formSection">
             <h2 class="formSectionTitle regularText" isRequired="true">
+                Illustration
+            </h2>
+            <input type="file" accept="image/*" id="chapterIllustration">
+            <p class="help">
+                - Vous pouvez utiliser tous les formats d'images suivant (.png, .jpeg, .jpg, .gif).
+                <br/>
+                - La taille maximal autorisé est de 5 Mo.
+            </p>
+        </div>
+        <div class="formSection">
+            <h2 class="formSectionTitle regularText" isRequired="true">
                 Chapitre
             </h2>
             <select id="chapterNumber" class="formSelection">
@@ -43,22 +54,34 @@
 
     // Publish action
     $('#publish').click(() => {
+        // Variables
+        let formData = new FormData();
         let chapterTitle = $('#chapterTitle').val();
+        let chapterIllustration = $('#chapterIllustration').prop('files')[0];
         let chapterNumber = $('#chapterNumber').val();
         let chapterContent = $('#chapterContent').val();
+
+        // Push all in form data
+        formData.append('chapterTitle', chapterTitle);
+        formData.append('chapterIllustration', chapterIllustration);
+        formData.append('chapterNumber', chapterNumber);
+        formData.append('chapterContent', chapterContent);
+
         if (chapterTitle && chapterNumber && chapterContent) {
-            $.post('new',
-                {
-                    chapterTitle: chapterTitle,
-                    chapterNumber: chapterNumber,
-                    chapterContent: chapterContent,
-                    author: '<?php echo $this->getUsername(); ?>'
-                },
-                function (msg) {
-                    if (msg) return errorMessage(msg);
-                    return successMessage('Le chapitre à bien été ajouté');
-                }
-            );
+            if (chapterIllustration) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'new',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function(msg) {
+                        if (msg) return errorMessage(msg);
+                        return successMessage('Le chapitre à bien été ajouté');
+                    }
+                })
+            }
+            return errorMessage('Merci de séléctionner une illustration.');
         }
         return errorMessage('Merci de remplir tout les champs.');
     });
@@ -86,6 +109,8 @@
             icon: 'success',
             title: 'Success',
             text: msg
+        }).then(() => {
+            location.href = './chapters';
         })
     }
 </script>

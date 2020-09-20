@@ -41,7 +41,10 @@ $router->get('/chapters', function () {  echo "Ensemble des chapitres"; });
  * Get chapter by ID
  * @GET route
  */
-$router->get('/chapters/:id', function ($idTicket) {  echo "Vous êtes actuellement sur le ticket " . $idTicket; });
+$router->get('/chapters/:page', function ($idTicket) {
+    require_once 'Controllers/ChaptersController.php';
+    new ChaptersController('chapters');
+});
 
 /**
  * Add new chapter
