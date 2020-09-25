@@ -10,7 +10,6 @@ ALL
     padding: 0;
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    font-weight: bold;
 }
 
 body {
@@ -19,6 +18,17 @@ body {
 
 a {
     text-decoration: none;
+}
+
+strong {
+    font-weight: bolder;
+    color: white;
+}
+
+code {
+    background-color: rgba(200, 200, 200, 0.1);
+    color: white;
+    border-radius: 2px;
 }
 
 /**
@@ -35,6 +45,18 @@ GENERIC
 
 .coloredText {
     color: #27ae60;
+}
+
+.small {
+    font-size: 12px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
 }
 
 /**
@@ -111,7 +133,8 @@ HOME
 
 .header h3 {
     padding: 2px 10px;
-    text-shadow: 1px 1px 2px black
+    text-align: center;
+    text-shadow: 1px 1px 2px black;
 }
 
 .headerText {
@@ -202,11 +225,10 @@ ACCOUNT PAGE
 
 .formContainer {
     padding: 20px;
-    width: 650px;
+    width: 80%;
     margin: 100px auto 50px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    background-color: rgba(255, 255, 255, .05);
-    border-radius: 10px;
+    background-color: #2c3e50;
 }
 
 .formSection {
@@ -398,6 +420,7 @@ CHAPTERS
     width: 100%;
     min-height: 50vh;
     flex-wrap: wrap;
+    position: relative;
 }
 
 .chapterCard {
@@ -446,6 +469,77 @@ CHAPTERS
 .chapterCardTitle h2 {
     background-color: rgba(0, 0, 0, .3);
     padding: 2px 10px;
+}
+
+.chapterHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.readTime {
+    cursor: pointer;
+}
+
+.chapterReadContent {
+    display: flex;
+    width: 90%;
+    flex-wrap: wrap;
+    color: #c2c2c2;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.commentContainer {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.commentCard {
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+    background-color: #2c3e50;
+    width: 80%;
+}
+
+.commentCardLeft {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background-color: #34495e;
+    padding: 5px;
+    flex: .2;
+}
+
+.commentCardRight {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    color: white;
+    padding: 10px;
+    flex: .8;
+}
+
+.commentCard img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.commentCardinfos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
 }
 
 /**

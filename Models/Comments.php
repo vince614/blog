@@ -6,24 +6,23 @@ class Comments extends Mysql {
      * Create comment
      * @param $comment
      * @param $authorId
-     * @return $this
+     * @param $ticketId
      */
-    public function createComment($comment, $authorId) {
-        $req = Mysql::_getConnection()->prepare("INSERT INTO comments (comment, author, date_public) VALUES (?, ?, ?)");
-        $req->execute(array($comment, $authorId, time()));
-        return $this;
+    public function createComment($comment, $authorId, $ticketId) {
+        $req = Mysql::_getConnection()->prepare("INSERT INTO comments (comment, ticketId, authorId, date_public) VALUES (?, ?, ?, ?)");
+        $req->execute(array($comment, (int)$ticketId, (int)$authorId, time()));
     }
 
     /**
-     * Read comment
-     * @param $commentId
+     * Fetch comments
+     * @param $ticketId
      * @return bool|mixed
      */
-    public function readComments($commentId) {
-        $req = Mysql::_getConnection()->prepare("SELECT * FROM comments WHERE id = ?");
-        $req->execute(array($commentId));
+    public function fetchComments($ticketId) {
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM comments WHERE ticketId = ?");
+        $req->execute(array($ticketId));
         if ($req->rowCount() > 0) {
-            return $req->fetch();
+            return $req->fetchAll();
         }
         return false;
     }

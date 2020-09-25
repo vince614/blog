@@ -93,4 +93,16 @@ class Users extends Mysql {
         }
         return false;
     }
+
+    /**
+     * Get user by id
+     * @param $userId
+     * @return bool
+     */
+    public function getUserById($userId)
+    {
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM users WHERE id = ?");
+        $req->execute(array($userId));
+        return $req->fetch();
+    }
 }

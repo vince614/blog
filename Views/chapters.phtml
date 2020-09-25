@@ -1,23 +1,121 @@
 <?php
 /** @var $tickets array */
+/** @var $ticket array */
 ?>
 <div class="header">
-    <div class="headerText">
-        <h1 class="regularText">Liste des chapitres</h1>
-    </div>
-    <img src="<?php echo $this->getHost() ?>/assets/imgs/library.jpg" alt="library">
+    <?php if ($viewTicket = isset($ticket)): ?>
+        <div class="headerText">
+            <h1 class="regularText"><?php echo $ticket['title'] ?></h1>
+            <h3 class="regularText">Chapitre <?php echo $ticket['chapter'] ?></h3>
+        </div>
+        <img src="<?php echo $this->getHost() ?>/uploads/chapter_<?php echo $ticket['chapter'] ?>.png" alt="library">
+    <?php else: ?>
+        <div class="headerText">
+            <h1 class="regularText">Liste des chapitres</h1>
+        </div>
+        <img src="<?php echo $this->getHost() ?>/assets/imgs/library.jpg" alt="library">
+    <?php endif; ?>
 </div>
 <div class="chaptersList">
-    <?php foreach ($tickets as $ticket): ?>
-        <a href="<?php echo $this->getHost() ?>/chapters/<?php echo $ticket['id'] ?>">
-            <div style="background-image: url('uploads/chapter_<?php echo $ticket['chapter'] ?>.png')" class="chapterCard">
-                <div class="chapterCardHeader">
-                    <span class="regularText">Chapitre <?php echo $ticket['chapter'] ?> - <span class="lightText"><?php echo date("d/m/Y", $ticket['date_public']);  ?></span></span>
+    <?php if (!$viewTicket): ?>
+        <?php foreach ($tickets as $ticket): ?>
+            <a href="<?php echo $this->getHost() ?>/chapters/<?php echo $ticket['id'] ?>">
+                <div style="background-image: url('<?php echo $this->getHost() ?>/uploads/chapter_<?php echo $ticket['chapter'] ?>.png')" class="chapterCard">
+                    <div class="chapterCardHeader">
+                        <span class="regularText">Chapitre <?php echo $ticket['chapter'] ?> - <span class="lightText"><?php echo date("d/m/Y", $ticket['date_public']);  ?></span></span>
+                    </div>
+                    <div class="chapterCardTitle">
+                        <h2 class="regularText">"<?php echo $ticket['title'] ?>"</h2>
+                    </div>
                 </div>
-                <div class="chapterCardTitle">
-                    <h2 class="regularText">"<?php echo $ticket['title'] ?>"</h2>
+            </a>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="chapterHeader">
+            <h4 tooltip="Temps estimé pour la lecture" class="readTime lightText"><?php echo $readTime ?></h4>
+            <h1 class="regularText"><?php echo $ticket['title'] ?></h1>
+        </div>
+        <div class="chapterReadContent">
+            <?php echo $ticket['content'] ?>
+        </div>
+        <div class="commentContainer">
+            <h1 class="regularText">Commentaires</h1>
+            <?php if (isset($comments)): ?>
+                <?php foreach ($comments as $comment): ?>
+                    <div class="commentCard">
+                        <div class="commentCardLeft">
+                            <img src="<?php echo $this->getHost() ?>/assets/avatar/avatar.png">
+                            <div class="commentCardinfos">
+                                <span class="regularText"><?php echo ucfirst($comment['author']['username']); ?></span>
+                                <span class="lightText small italic">Ecrit le <?php echo date('d/m/Y', $comment['date_public']) ?></span>
+                                <span class="lightText small italic">à <?php echo date('H:i:s', $comment['date_public']) ?></span>
+                            </div>
+                        </div>
+                        <div class="commentCardRight">
+                            <?php echo $comment['comment']; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <div class="formContainer">
+                <div class="formSection">
+                    <h2 class="formSectionTitle regularText">Ecrire un commentaire</h2>
+                    <textarea id="comment" class="textarea" placeholder="Commentaire"></textarea>
+                    <p class="help">
+                        - Veuillez rester respectueux et utiliser un language correct.
+                    </p>
+                </div>
+                <div id="publish" class="buttonContainer">
+                    Publier
                 </div>
             </div>
-        </a>
-    <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 </div>
+<script>
+    // Click on "publier"
+    $('#publish').click(function () {
+        let comment = $('#comment').val();
+        if (comment) {
+            $.post('',
+                {
+                    comment: comment,
+                    ticketId: <?php echo $viewTicket ? $ticket["id"] : NULL ?>
+                },
+                function(msg) {
+                    if (msg) return errorMessage(msg);
+                    successMessage('Votre commentaire à bien été ajouté').then(() => {
+                        location.reload();
+                    })
+                }
+            );
+        }
+        return errorMessage('Veuillez écrire un commentaire.');
+    });
+
+    /**
+     * Send error notifications
+     * @param msg
+     * @return {*}
+     */
+    function errorMessage(msg) {
+        return Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            html: msg
+        })
+    }
+
+    /**
+     * Send success notifications
+     * @param msg
+     * @return {*}
+     */
+    function successMessage(msg) {
+        return Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: msg
+        })
+    }
+</script>

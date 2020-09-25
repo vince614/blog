@@ -11,6 +11,7 @@ require_once "Router/Router.php";
 require_once "Router/Route.php";
 require_once "Router/RouterException.php";
 require_once "Controllers/Controller.php";
+require_once 'vendor/autoload.php';
 
 // Instancies class
 $abstract = new Core_Abstract();
@@ -33,17 +34,21 @@ $router->get('/account', function () {});
 
 /**
  * All chapters
- * @GET route
+ * @GET & @POST route
  */
 $router->get('/chapters', function () {  echo "Ensemble des chapitres"; });
 
 /**
  * Get chapter by ID
- * @GET route
+ * @GET & @POST route
  */
 $router->get('/chapters/:page', function ($idTicket) {
     require_once 'Controllers/ChaptersController.php';
-    new ChaptersController('chapters');
+    new ChaptersController('chapters', $idTicket);
+});
+$router->post('/chapters/:page', function ($idTicket) {
+    require_once 'Controllers/ChaptersController.php';
+    new ChaptersController('chapters', $idTicket);
 });
 
 /**

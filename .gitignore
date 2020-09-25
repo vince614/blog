@@ -4,3 +4,12 @@
 ## Logs
 Log/
 
+## Upload files
+uploads/
+
+## Node modules
+node_modules/
+package-lock.json
+
+## Composer packages
+vendor/
