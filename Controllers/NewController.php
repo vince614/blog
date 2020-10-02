@@ -57,13 +57,16 @@ class NewController extends Controller
             $error = $this->_checkAndUploadFile($_FILES, $request['chapterNumber']);
             if ($error) {
                 echo $error;
-            }else {
-                $this->_ticketsManager->createTicket(
+            } else {
+                $error = $this->_ticketsManager->createTicket(
                     $request['chapterTitle'],
                     $request['chapterNumber'],
                     $request['chapterContent'],
-                    $this->getUsername()
+                    $this->getUserId()
                 );
+                if ($error) {
+                    echo $error;
+                }
             }
             exit;
         }

@@ -8,6 +8,11 @@ class Users extends Mysql {
     const MIN_PASSWORD_LENGTH = 7;
 
     /**
+     * Views types
+     */
+    const VIEW_TYPE_CHAPTER = 1;
+
+    /**
      * Register account
      * @param $email
      * @param $username
@@ -105,4 +110,50 @@ class Users extends Mysql {
         $req->execute(array($userId));
         return $req->fetch();
     }
+
+    /**
+     * Count chapter write by user with user ID.
+     * @param $userId
+     * @return int
+     */
+    public function getChaptersWriterCount($userId)
+    {
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM tickets WHERE author_id = ?");
+        $req->execute(array($userId));
+        return $req->rowCount();
+    }
+
+    /**
+     * Comments count by userr id
+     * @param $userId
+     * @return int
+     */
+    public function getCommentsCount($userId)
+    {
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM comments WHERE authorId = ?");
+        $req->execute(array($userId));
+        return $req->rowCount();
+
+    }
+
+    /**
+     * Get chapter views count
+     * @param $userId
+     * @return int
+     */
+    public function getChapterViewCount($userId)
+    {
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM views WHERE user_id = ?");
+        $req->execute(array($userId));
+        return $req->rowCount();
+    }
+
+    /**
+     * @TODO
+     * Faire un système d'édition des chapitres
+     * Bien régler l'intégration de l'éditeur de texte externe
+     * Règler le message d'erreur lors de la connexion
+     * Prévoir un cookie "se souvenir de moi" avec un token de clé crypté
+     * Edition / supppresion des commentaires
+     */
 }

@@ -484,9 +484,8 @@ CHAPTERS
 }
 
 .chapterReadContent {
-    display: flex;
+    display: block;
     width: 90%;
-    flex-wrap: wrap;
     color: #c2c2c2;
     font-size: 18px;
     margin-top: 20px;

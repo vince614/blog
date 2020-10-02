@@ -59,7 +59,7 @@
         let chapterTitle = $('#chapterTitle').val();
         let chapterIllustration = $('#chapterIllustration').prop('files')[0];
         let chapterNumber = $('#chapterNumber').val();
-        let chapterContent = $('#chapterContent').val();
+        let chapterContent = tinymce.get('chapterContent').getContent();
 
         // Push all in form data
         formData.append('chapterTitle', chapterTitle);
@@ -95,7 +95,7 @@
         return Swal.fire({
             icon: 'error',
             title: 'Erreur',
-            text: msg
+            html: msg
         })
     }
 
@@ -113,4 +113,10 @@
             location.href = './chapters';
         })
     }
+
+    tinymce.init({
+        selector: '#chapterContent',
+        skin: 'oxide-dark',
+        height: '500px'
+    });
 </script>

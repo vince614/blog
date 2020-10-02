@@ -24,11 +24,23 @@ class Tickets extends Mysql {
      * @param $title
      * @param $chapter
      * @param $content
-     * @param $author
+     * @param $authorId
+     * @return string
      */
-    public function createTicket($title, $chapter, $content, $author) {
-        $req = Mysql::_getConnection()->prepare("INSERT INTO tickets (title, chapter, content, author, date_public) VALUES (?, ?, ?, ?, ?)");
-        $req->execute(array($title, $chapter, $content, $author, time()));
+    public function createTicket($title, $chapter, $content, $authorId) {
+        /** @var PDO $pdo **/
+        $pdo = Mysql::_getConnection();
+
+        // Check if chapter exist
+        $req = $pdo->prepare("SELECT * FROM tickets WHERE chapter = ?");
+        $req->execute(array($chapter));
+        if ($req->rowCount() === 0) {
+            // Create chapter
+            $req = Mysql::_getConnection()->prepare("INSERT INTO tickets (title, chapter, content, author_id, date_public) VALUES (?, ?, ?, ?, ?)");
+            $req->execute(array($title, $chapter, $content, (int)$authorId, time()));
+        } else {
+            return "Le chapitre <b>" . $chapter . "</b> existe déjà.<br/>Editer le chapitre juste <a href='#'>ici</a>";
+        }
     }
 
     /**
@@ -100,6 +112,27 @@ class Tickets extends Mysql {
         $req = Mysql::_getConnection()->prepare('DELETE FROM tickets WHERE id = ?');
         $req->execute(array($ticketId));
         return $this;
+    }
+
+    /**
+     * Set view on ticket
+     * @param $userId
+     * @param $ticketId
+     */
+    public function setView($userId, $ticketId)
+    {
+        /** @var PDO $pdo */
+        $pdo = Mysql::_getConnection();
+
+        // Check if user have already view chapter
+        $req = $pdo->prepare("SELECT * FROM views WHERE user_id = ? AND ticket_id = ?");
+        $req->execute(array((int)$userId, (int)$ticketId));
+
+        // If not already read, insert in database
+        if ($req->rowCount() === 0) {
+            $req = Mysql::_getConnection()->prepare("INSERT INTO views (user_id, ticket_id) VALUES (?, ?)");
+            $req->execute(array((int)$userId, (int)$ticketId));
+        }
     }
 
 }

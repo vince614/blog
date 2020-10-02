@@ -105,9 +105,6 @@ class ChaptersController extends Controller
                 $ticket = $this->_ticketsManager->readTicket($this->_param);
                 $comments = $this->_commentManager->fetchComments((int)$this->_param);
 
-                // Get markdown & set author
-                $ticket['content'] = $this->_getMarkdown($ticket['content']);
-
                 // Estimate read time
                 $word = str_word_count(strip_tags($ticket['content']));
                 $m = floor($word / 200);
@@ -117,16 +114,26 @@ class ChaptersController extends Controller
 
                 // Get markdow & author
                 $commentsResult = [];
-                foreach ($comments as $comment) {
-                    $comment['comment'] = $this->_getMarkdown($comment['comment']);
-                    $comment['author'] = $this->_userManager->getUserById($comment['authorId']);
-                    $commentsResult[] = $comment;
+
+                // If have comments
+                if ($comments) {
+                    foreach ($comments as $comment) {
+                        $comment['author'] = $this->_userManager->getUserById($comment['authorId']);
+                        $commentsResult[] = $comment;
+                    }
                 }
 
                 // If have ticket
                 if ($ticket) {
                     // Set ticket var in template
                     $this->setVar('ticket', $ticket);
+
+                    // Check is user is login
+                    if ($this->isLogin()) {
+                        // Set view in ticket
+                        $this->_ticketsManager->setView($this->getUserId(), $ticket['id']);
+                    }
+
                     if ($comments) {
                         // Set comments var in template
                         $this->setVar('comments', $commentsResult);
@@ -141,19 +148,4 @@ class ChaptersController extends Controller
             $this->setVar('tickets', $tickets);
         }
     }
-
-    /**
-     * Get markdow with Parsedown
-     * @param $content
-     * @return string
-     */
-    private function _getMarkdown($content)
-    {
-        $Parsedown = new Parsedown();
-        $Parsedown->setSafeMode(true);
-        $Parsedown->setMarkupEscaped(true);
-        return nl2br($Parsedown->text($content));
-    }
-
-
 }

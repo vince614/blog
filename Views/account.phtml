@@ -15,19 +15,19 @@
                     <div tooltip="Chapitres lu" class="statIcon">
                         <img src="<?php echo $this->getHost() ?>/assets/imgs/icons/book-open.png" alt="open-book">
                     </div>
-                    <h2 class="regularText">122</h2>
+                    <h2 class="regularText"><?php echo $chaptersViewCount; ?></h2>
                 </div>
                 <div class="stat">
                     <div tooltip="Commentaires" class="statIcon">
                         <img src="<?php echo $this->getHost() ?>/assets/imgs/icons/comments.png" alt="comments">
                     </div>
-                    <h2 class="regularText">10</h2>
+                    <h2 class="regularText"><?php echo $commentsCount; ?></h2>
                 </div>
                 <div class="stat">
                     <div tooltip="Chapitres écrit" class="statIcon">
                         <img src="<?php echo $this->getHost() ?>/assets/imgs/icons/write.png" alt="write">
                     </div>
-                    <h2 class="regularText">123</h2>
+                    <h2 class="regularText"><?php echo $chaptersCount; ?></h2>
                 </div>
             </div>
             <?php if($this->isAdmin()): ?>

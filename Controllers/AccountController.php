@@ -13,7 +13,7 @@ class AccountController extends Controller
 
     /**
      * Model instance
-     * @var $_accountManager
+     * @var Users $_accountManager
      */
     private $_accountManager;
 
@@ -64,6 +64,20 @@ class AccountController extends Controller
      * Execute before rendering
      */
     private function _beforeRender() {
+        // Check if user is login
+        if ($this->isLogin()) {
+
+            // Statistics
+            $userId = $this->getUserId();
+            $chaptersCount = $this->_accountManager->getChaptersWriterCount($userId);
+            $commentCount = $this->_accountManager->getCommentsCount($userId);
+            $chaptersViewsCount = $this->_accountManager->getChapterViewCount($userId);
+
+            // Set variables
+            $this->setVar('chaptersCount', $chaptersCount);
+            $this->setVar('commentsCount', $commentCount);
+            $this->setVar('chaptersViewCount', $chaptersViewsCount);
+        }
         $request = $this->getPostRequest();
         if ($request) {
             /**
