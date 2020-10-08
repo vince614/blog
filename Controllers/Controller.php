@@ -32,7 +32,7 @@ class Controller extends Core_Abstract
         $viewFile = 'Views/' . str_replace('.', '/', $view) . '.phtml';
         if (file_exists($viewFile)) {
             require $viewFile;
-        }else {
+        } else {
             $this->notFound();
         }
 
@@ -75,7 +75,8 @@ class Controller extends Core_Abstract
      * Get user id
      * @return int
      */
-    public function getUserId() {
+    public function getUserId()
+    {
         return $_SESSION['user']['id'];
     }
 
@@ -83,7 +84,8 @@ class Controller extends Core_Abstract
      * Get user email
      * @return string
      */
-    public function getEmail() {
+    public function getEmail()
+    {
         return $_SESSION['user']['email'];
     }
 
@@ -91,7 +93,8 @@ class Controller extends Core_Abstract
      * Get username
      * @return string
      */
-    public function getUsername() {
+    public function getUsername()
+    {
         return ucfirst($_SESSION['user']['username']);
     }
 
@@ -99,7 +102,8 @@ class Controller extends Core_Abstract
      * Get user registration date
      * @return int
      */
-    public function getRegisterDate() {
+    public function getRegisterDate()
+    {
         return $_SESSION['user']['register_date'];
     }
 

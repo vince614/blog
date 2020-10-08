@@ -42,7 +42,8 @@ class AccountController extends Controller
      * Index
      * @param $path
      */
-    public function index($path) {
+    public function index($path)
+    {
         if (!isset($path)) {
             $this->notFound();
             return;
@@ -55,7 +56,8 @@ class AccountController extends Controller
     /**
      * Init model connection
      */
-    private function initModel() {
+    private function initModel()
+    {
         require_once self::USER_MODEL_PATH;
         $this->_accountManager = new Users();
     }
@@ -63,7 +65,8 @@ class AccountController extends Controller
     /**
      * Execute before rendering
      */
-    private function _beforeRender() {
+    private function _beforeRender()
+    {
         // Check if user is login
         if ($this->isLogin()) {
 
@@ -89,7 +92,7 @@ class AccountController extends Controller
                     $request['email'],
                     $request['password']
                 );
-            }else {
+            } else {
                 $result = $this->_accountManager->register(
                     $request['email'],
                     $request['username'],
@@ -111,7 +114,8 @@ class AccountController extends Controller
      * Check if user is admin
      * @return bool
      */
-    public function isAdmin() {
+    public function isAdmin()
+    {
         $userId = $this->getUserId();
         return $this->_accountManager->isAdmin($userId);
     }

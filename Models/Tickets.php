@@ -1,6 +1,7 @@
 <?php
 
-class Tickets extends Mysql {
+class Tickets extends Mysql
+{
 
     /**
      * Limit of fetch tickets
@@ -27,8 +28,9 @@ class Tickets extends Mysql {
      * @param $authorId
      * @return string
      */
-    public function createTicket($title, $chapter, $content, $authorId) {
-        /** @var PDO $pdo **/
+    public function createTicket($title, $chapter, $content, $authorId)
+    {
+        /** @var PDO $pdo * */
         $pdo = Mysql::_getConnection();
 
         // Check if chapter exist
@@ -48,7 +50,8 @@ class Tickets extends Mysql {
      * @param $ticketId
      * @return mixed
      */
-    public function readTicket($ticketId) {
+    public function readTicket($ticketId)
+    {
         $req = Mysql::_getConnection()->prepare("SELECT * FROM tickets WHERE id = ?");
         $req->execute(array($ticketId));
         return $req->fetch();
@@ -58,10 +61,11 @@ class Tickets extends Mysql {
      * Fetch tickets
      * @return mixed
      */
-    public function fetchTickets() {
+    public function fetchTickets()
+    {
         $ticketsCount = $this->_ticketsCount();
         $this->pageCount = ceil($ticketsCount / self::TICKETS_FETCH_LIMIT);
-        $firstFetch = ($this->currentPage - 1 ) * self::TICKETS_FETCH_LIMIT;
+        $firstFetch = ($this->currentPage - 1) * self::TICKETS_FETCH_LIMIT;
         $req = Mysql::_getConnection()->prepare("SELECT * FROM tickets ORDER BY date_public DESC LIMIT " . $firstFetch . ", " . self::TICKETS_FETCH_LIMIT);
         $req->execute();
         return $req->fetchAll();
@@ -97,7 +101,8 @@ class Tickets extends Mysql {
      * @param $ticketId
      * @return tickets
      */
-    public function updateTicket($ticketInformation, $ticketId) {
+    public function updateTicket($ticketInformation, $ticketId)
+    {
         $req = Mysql::_getConnection()->prepare("UPDATE tickets SET title = ?, content = ? WHERE id = ?");
         $req->execute(array($ticketInformation[0], $ticketInformation[1], $ticketId));
         return $this;
@@ -108,7 +113,8 @@ class Tickets extends Mysql {
      * @param $ticketId
      * @return tickets
      */
-    public function deleteTicket($ticketId) {
+    public function deleteTicket($ticketId)
+    {
         $req = Mysql::_getConnection()->prepare('DELETE FROM tickets WHERE id = ?');
         $req->execute(array($ticketId));
         return $this;

@@ -19,6 +19,9 @@ $abstract = new Core_Abstract();
 // Get router url
 $router = new Router($abstract->getUrl());
 
+// Try to connect
+$abstract->tryConnectionWithCookie();
+
 /**
  * Home route
  * @GET route
@@ -63,16 +66,16 @@ $router->post('/new', function () {});
  * @GET route
  */
 $router->get('/logout', function () {
-    if (!empty($_SESSION)) {
+    if (isset($_SESSION)) {
         // Destroy session
-        $_SESSION = array();
-        session_destroy();
+        unset($_SESSION['user']);
         // Delete cookies
         setcookie('login', null);
         setcookie('pass_hache', null);
+        setcookie('remember_key', null, null, '/');
     }
     // Redirect
-    header('Location: ./account');
+    header('Location: ./');
 });
 
 

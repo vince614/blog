@@ -1,6 +1,7 @@
 <?php
 
-class Users extends Mysql {
+class Users extends Mysql
+{
 
     /**
      * Minimum password length
@@ -20,7 +21,8 @@ class Users extends Mysql {
      * @param $confirmPassword
      * @return string|bool
      */
-    public function register($email, $username, $password, $confirmPassword) {
+    public function register($email, $username, $password, $confirmPassword)
+    {
         if ($password === $confirmPassword) {
             if (strlen($password) >= self::MIN_PASSWORD_LENGTH) {
                 if (!$this->_userExist($email)) {
@@ -40,7 +42,8 @@ class Users extends Mysql {
      * @param $email
      * @return bool
      */
-    protected function _userExist($email) {
+    protected function _userExist($email)
+    {
         $req = Mysql::_getConnection()->prepare("SELECT * FROM users WHERE email = ?");
         $req->execute(array($email));
         if ($req->rowCount() > 0) {
@@ -55,7 +58,8 @@ class Users extends Mysql {
      * @param $password
      * @return string
      */
-    public function login($email, $password) {
+    public function login($email, $password)
+    {
         if ($this->_userExist($email)) {
             $req = Mysql::_getConnection()->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
             $req->execute(array($email, sha1($password)));
@@ -68,6 +72,10 @@ class Users extends Mysql {
                         $loginInformation['username'],
                         $loginInformation['register_date']
                     ]);
+
+                // Set remember key
+                $this->_setRememberKey($loginInformation['id']);
+
                 return false;
             }
             return "Le mot de passe n'est pas correct. Veuillez réessayer";
@@ -76,21 +84,12 @@ class Users extends Mysql {
     }
 
     /**
-     * Logout from sesssion
-     */
-    public function logout() {
-        if (isset($_SESSION['user'])) {
-            // Unset user session
-            unset($_SESSION['user']);
-        }
-    }
-
-    /**
      * Check if user is admin
      * @param $userId
      * @return bool
      */
-    public function isAdmin($userId) {
+    public function isAdmin($userId)
+    {
         $req = Mysql::_getConnection()->prepare("SELECT * FROM users WHERE id = ? AND admin = ?");
         $req->execute(array($userId, 1));
         if ($req->rowCount() > 0) {
@@ -148,12 +147,48 @@ class Users extends Mysql {
         return $req->rowCount();
     }
 
+
+    /**
+     * Set remember key
+     * @param $userId
+     * @return bool
+     */
+    protected function _setRememberKey($userId)
+    {
+        // Delete all old keys
+        $req = Mysql::_getConnection()->prepare("DELETE FROM remember_me WHERE user_id = ?");
+        $req->execute(array($userId));
+
+        while (true) {
+
+            // Generate key
+            $key = $this->_generateRememberKey(30);
+
+            // Check if key exist
+            $req = Mysql::_getConnection()->prepare("SELECT * FROM remember_me WHERE remember_key = ?");
+            $req->execute(array($key));
+            if ($req->rowCount() == 0) {
+
+                // Insert key in database
+                $req = Mysql::_getConnection()->prepare("INSERT INTO remember_me (user_id, remember_key) VALUES (?, ?)");
+                $req->execute(array($userId, $key));
+
+                // Set cookie for 30 days
+                $cookieDaysExpire = 30;
+                setcookie('remember_key', $key, time() + 3600 * 24 * $cookieDaysExpire, '/');
+
+                // Stop loop
+                return true;
+            }
+        }
+    }
+
     /**
      * @TODO
-     * Faire un système d'édition des chapitres
-     * Bien régler l'intégration de l'éditeur de texte externe
-     * Règler le message d'erreur lors de la connexion
-     * Prévoir un cookie "se souvenir de moi" avec un token de clé crypté
-     * Edition / supppresion des commentaires
+     * Faire un système d'édition des chapitres ----------------------------------
+     * Bien régler l'intégration de l'éditeur de texte externe -------------------
+     * Règler le message d'erreur lors de la connexion --------------------------- OK
+     * Prévoir un cookie "se souvenir de moi" avec un token de clé crypté -------- OK
+     * Edition / supppresion des commentaires ------------------------------------
      */
 }

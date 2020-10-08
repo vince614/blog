@@ -1,6 +1,7 @@
 <?php
 
-class Mysql {
+class Mysql
+{
 
     /**
      * Connection with database
@@ -26,7 +27,8 @@ class Mysql {
     /**
      * Init session
      */
-    private function _initSession() {
+    private function _initSession()
+    {
         session_start();
     }
 
@@ -34,7 +36,8 @@ class Mysql {
      * Get connection with database
      * @return PDO
      */
-    protected function _getConnection() {
+    protected function _getConnection()
+    {
         return $this->_pdo;
     }
 
@@ -42,12 +45,24 @@ class Mysql {
      * Set login flag
      * @param $informations
      */
-    protected function _setIsLogin($informations) {
+    protected function _setIsLogin($informations)
+    {
         $_SESSION['user'] = [
             'id' => $informations[0],
             'email' => $informations[1],
             'username' => $informations[2],
             'register_date' => $informations[3]
         ];
+    }
+
+    /**
+     * Generate random key
+     * @param $lenght
+     * @return string
+     */
+    protected function _generateRememberKey($lenght)
+    {
+        $randomPseudoBytes = openssl_random_pseudo_bytes($lenght);
+        return base64_encode($randomPseudoBytes);
     }
 }

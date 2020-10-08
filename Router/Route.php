@@ -73,7 +73,8 @@ class Route
     /**
      * Load model & controller
      */
-    private function load() {
+    private function load()
+    {
         require_once 'Models/Mysql.php';
 
         // Home controller

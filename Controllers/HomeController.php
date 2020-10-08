@@ -16,7 +16,8 @@ class HomeController extends Controller
      * Index
      * @param $path
      */
-    public function index($path) {
+    public function index($path)
+    {
         if (!isset($path)) {
             $this->notFound();
             return;

@@ -1,6 +1,7 @@
 <?php
 
-class Comments extends Mysql {
+class Comments extends Mysql
+{
 
     /**
      * Create comment
@@ -8,7 +9,8 @@ class Comments extends Mysql {
      * @param $authorId
      * @param $ticketId
      */
-    public function createComment($comment, $authorId, $ticketId) {
+    public function createComment($comment, $authorId, $ticketId)
+    {
         $req = Mysql::_getConnection()->prepare("INSERT INTO comments (comment, ticketId, authorId, date_public) VALUES (?, ?, ?, ?)");
         $req->execute(array($comment, (int)$ticketId, (int)$authorId, time()));
     }
@@ -18,7 +20,8 @@ class Comments extends Mysql {
      * @param $ticketId
      * @return bool|mixed
      */
-    public function fetchComments($ticketId) {
+    public function fetchComments($ticketId)
+    {
         $req = Mysql::_getConnection()->prepare("SELECT * FROM comments WHERE ticketId = ?");
         $req->execute(array($ticketId));
         if ($req->rowCount() > 0) {
@@ -32,7 +35,8 @@ class Comments extends Mysql {
      * @param $commentId
      * @return bool
      */
-    public function deleteComment($commentId) {
+    public function deleteComment($commentId)
+    {
         $req = Mysql::_getConnection()->prepare("DELETE FROM comments WHERE id = ?");
         $req->execute(array($commentId));
         if ($req->rowCount() > 0) {
@@ -47,7 +51,8 @@ class Comments extends Mysql {
      * @param $commentId
      * @return bool
      */
-    public function updateComment($comment, $commentId) {
+    public function updateComment($comment, $commentId)
+    {
         $req = Mysql::_getConnection()->prepare("UPDATE comments SET comment = ? WHERE id = ?");
         $req->execute(array($comment, $commentId));
         if ($req->rowCount() > 0) {
@@ -62,7 +67,8 @@ class Comments extends Mysql {
      * @param $authorId
      * @return $this
      */
-    public function signalComment($commentId, $authorId) {
+    public function signalComment($commentId, $authorId)
+    {
         $req = Mysql::_getConnection()->prepare("INSERT INTO signal (commentId, flagmanId, date_signal) VALUES (?, ?, ?)");
         $req->execute(array($commentId, $authorId, time()));
         return $this;

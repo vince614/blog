@@ -94,7 +94,8 @@ class ChaptersController extends Controller
             if ($request = $this->getPostRequest()) {
                 // Check if user is login
                 if ($this->isLogin()) {
-                    $this->_commentManager->createComment($request['comment'], $this->getUserId(), $request['ticketId']);
+                    $this->_commentManager->createComment($request['comment'], $this->getUserId(),
+                        $request['ticketId']);
                 } else {
                     // Callback error message
                     echo 'Vous devez être connecté pour écrire un commentaire, connectez vous <a href="' . $this->getHost() . '/account">ici</a>';
