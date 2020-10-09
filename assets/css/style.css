@@ -283,6 +283,13 @@ ACCOUNT PAGE
     color: white;
 }
 
+.fileImage {
+    display: flex;
+    height: 150px;
+    margin: 10px;
+    flex-wrap: wrap;
+}
+
 .textarea {
     margin-top: 10px;
     width: 100%;
@@ -407,6 +414,28 @@ ACCOUNT PAGE
 .accountButton {
     margin-top: 50px;
     padding: 10px 20px;
+}
+
+.accountChapters {
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.accountChapterCard {
+    position: relative;
+    display: flex;
+    width: 700px;
+    height: 200px;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /**

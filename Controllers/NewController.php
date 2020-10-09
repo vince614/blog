@@ -4,9 +4,10 @@ class NewController extends Controller
 {
 
     /**
-     * Ticket model path
+     * Models path
      */
     const TICKETS_MODEL_PATH = 'Models/Tickets.php';
+    const USERS_MODEL_PATH = 'Models/Users.php';
 
     /**
      * Model instance
@@ -15,11 +16,28 @@ class NewController extends Controller
     private $_ticketsManager;
 
     /**
+     * Model instance
+     * @var Users $_usersManager
+     */
+    private $_usersManager;
+
+    /**
+     * Chapter ID
+     * @var int $_idChapter
+     */
+    private $_idChapter;
+
+    /**
      * NewController constructor.
      * @param $path
+     * @param null $chapterId
      */
-    public function __construct($path)
+    public function __construct($path, $chapterId = null)
     {
+        // Edit chapter
+        if ($chapterId) {
+            $this->_idChapter = (int)$chapterId;
+        }
         $this->index($path);
     }
 
@@ -44,7 +62,9 @@ class NewController extends Controller
     private function initModel()
     {
         require_once self::TICKETS_MODEL_PATH;
+        require_once self::USERS_MODEL_PATH;
         $this->_ticketsManager = new Tickets();
+        $this->_usersManager = new Users();
     }
 
     /**
@@ -52,20 +72,47 @@ class NewController extends Controller
      */
     private function _beforeRender()
     {
+        if ($this->_idChapter) {
+            $ticket = $this->_ticketsManager->readTicket($this->_idChapter);
+            $ticket ? $this->setVar('ticket', $ticket) : $this->notFound();
+        }
         $request = $this->getPostRequest();
         if ($request) {
-            $error = $this->_checkAndUploadFile($_FILES, $request['chapterNumber']);
-            if ($error) {
-                echo $error;
-            } else {
-                $error = $this->_ticketsManager->createTicket(
+
+            // Is user isn't admin return Permission denied
+            if (!$this->_usersManager->isAdmin($this->getUserId())) {
+                exit('Autorisation refusés');
+            }
+
+            // Edit mode
+            if ($request['editMode'] == 1) {
+                if (isset($_FILES["chapterIllustration"])) {
+                    $error = $this->_checkAndUploadFile($_FILES, $request['chapterNumber']);
+                    if ($error) {
+                        echo $error;
+                    }
+                }
+                $this->_ticketsManager->editTicket(
                     $request['chapterTitle'],
                     $request['chapterNumber'],
                     $request['chapterContent'],
-                    $this->getUserId()
+                    $this->getUserId(),
+                    $request['ticketId']
                 );
+            } else {
+                $error = $this->_checkAndUploadFile($_FILES, $request['chapterNumber']);
                 if ($error) {
                     echo $error;
+                } else {
+                    $error = $this->_ticketsManager->createTicket(
+                        $request['chapterTitle'],
+                        $request['chapterNumber'],
+                        $request['chapterContent'],
+                        $this->getUserId()
+                    );
+                    if ($error) {
+                        echo $error;
+                    }
                 }
             }
             exit;

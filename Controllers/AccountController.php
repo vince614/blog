@@ -72,14 +72,15 @@ class AccountController extends Controller
 
             // Statistics
             $userId = $this->getUserId();
-            $chaptersCount = $this->_accountManager->getChaptersWriterCount($userId);
+            $chapterWritter = $this->_accountManager->getChaptersWriter($userId);
             $commentCount = $this->_accountManager->getCommentsCount($userId);
             $chaptersViewsCount = $this->_accountManager->getChapterViewCount($userId);
 
             // Set variables
-            $this->setVar('chaptersCount', $chaptersCount);
+            $this->setVar('chaptersCount', $chapterWritter['count']);
             $this->setVar('commentsCount', $commentCount);
             $this->setVar('chaptersViewCount', $chaptersViewsCount);
+            $this->setVar('chaptersWritter', $chapterWritter['chapters']);
         }
         $request = $this->getPostRequest();
         if ($request) {

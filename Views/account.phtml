@@ -1,5 +1,11 @@
+<?php
+/** @var array $chaptersWritter */
+/** @var int $chaptersViewCount */
+/** @var int $commentsCount */
+/** @var int $chaptersCount */
+?>
 <div class="pageContainer">
-    <?php if($this->isLogin()): ?>
+    <?php if ($this->isLogin()): ?>
         <div class="accountLogged">
             <div class="profileContainer">
                 <div class="profileCard">
@@ -30,12 +36,30 @@
                     <h2 class="regularText"><?php echo $chaptersCount; ?></h2>
                 </div>
             </div>
-            <?php if($this->isAdmin()): ?>
+            <?php if ($this->isAdmin()): ?>
                 <a href="<?php echo $this->getHost() ?>/new">
                     <div class="buttonContainer accountButton">
                         Ajouter un nouveau chapitre
                     </div>
                 </a>
+
+                <div class="accountChapters">
+                    <h1 class="regularText">Vos chapitres</h1>
+                    <div class="chaptersList">
+                        <?php foreach ($chaptersWritter as $chapter): ?>
+                            <a href="<?php echo $this->getHost() . '/edit/' . $chapter['id'] ?>">
+                                <div style="background-image: url('<?php echo $this->getHost() ?>/uploads/chapter_<?php echo $chapter['chapter'] ?>.png')" class="accountChapterCard">
+                                    <div class="chapterCardHeader">
+                                        <span class="regularText">Chapitre <?php echo $chapter['chapter'] ?> - <span class="lightText"><?php echo date("d/m/Y", $chapter['date_public']);  ?></span></span>
+                                    </div>
+                                    <div class="chapterCardTitle">
+                                        <h2 class="regularText">"<?php echo $chapter['title'] ?>"</h2>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
             <?php endif; ?>
         </div>
     <?php else: ?>
@@ -129,7 +153,7 @@
     /**
      * Register
      **/
-    $('#button-register').click(function() {
+    $('#button-register').click(function () {
         // Datas
         let email = $('#r-email').val();
         let username = $('#r-username').val();

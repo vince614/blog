@@ -111,15 +111,18 @@ class Users extends Mysql
     }
 
     /**
-     * Count chapter write by user with user ID.
+     * Chapter write by user with user ID.
      * @param $userId
-     * @return int
+     * @return array
      */
-    public function getChaptersWriterCount($userId)
+    public function getChaptersWriter($userId)
     {
         $req = Mysql::_getConnection()->prepare("SELECT * FROM tickets WHERE author_id = ?");
         $req->execute(array($userId));
-        return $req->rowCount();
+        return [
+            'count' => $req->rowCount(),
+            'chapters' => $req->fetchAll()
+        ];
     }
 
     /**
@@ -185,8 +188,8 @@ class Users extends Mysql
 
     /**
      * @TODO
-     * Faire un système d'édition des chapitres ----------------------------------
-     * Bien régler l'intégration de l'éditeur de texte externe -------------------
+     * Faire un système d'édition des chapitres ---------------------------------- OK
+     * Bien régler l'intégration de l'éditeur de texte externe ------------------- OK
      * Règler le message d'erreur lors de la connexion --------------------------- OK
      * Prévoir un cookie "se souvenir de moi" avec un token de clé crypté -------- OK
      * Edition / supppresion des commentaires ------------------------------------

@@ -1,16 +1,31 @@
+<?php
+
+// Flag
+$editMode = true;
+
+/** @var $ticket array */
+if (!isset($ticket)) {
+    $ticket = false;
+    $editMode = false;
+}
+?>
 <div class="newContainer">
     <div class="formContainer" style="width: 70%;">
         <div class="formSection">
             <h2 class="formSectionTitle regularText" isRequired="true">
                 Titre du chapitre
             </h2>
-            <input id="chapterTitle" class="input" type="text">
+            <input id="chapterTitle" class="input"
+                   type="text" <?php if ($editMode): ?> value="<?php echo $ticket['title'] ?>" <?php endif; ?>>
         </div>
         <div class="formSection">
             <h2 class="formSectionTitle regularText" isRequired="true">
                 Illustration
             </h2>
-            <input type="file" accept="image/*" id="chapterIllustration">
+            <?php if ($editMode): ?>
+                <img src="../uploads/chapter_<?php echo $ticket['chapter']; ?>.png" alt="" class="fileImage">
+            <?php endif; ?>
+            <input type="file" accept="image/*" id="chapterIllustration" value="test.png">
             <p class="help">
                 - Vous pouvez utiliser tous les formats d'images suivant (.png, .jpeg, .jpg, .gif).
                 <br/>
@@ -22,6 +37,9 @@
                 Chapitre
             </h2>
             <select id="chapterNumber" class="formSelection">
+                <?php if ($editMode): ?>
+                <option value="<?php echo $ticket['chapter'] ?>" selected><?php echo $ticket['chapter'] ?></option>
+                <?php endif; ?>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -52,6 +70,9 @@
 </div>
 <script>
 
+    let editMode = <?php echo (int) $editMode; ?>;
+    let ticketId = <?php echo $editMode ? $ticket['id'] : 'false' ?>;
+
     // Publish action
     $('#publish').click(() => {
         // Variables
@@ -66,18 +87,21 @@
         formData.append('chapterIllustration', chapterIllustration);
         formData.append('chapterNumber', chapterNumber);
         formData.append('chapterContent', chapterContent);
+        formData.append('editMode', editMode);
+        if (ticketId) formData.append('ticketId', ticketId);
 
         if (chapterTitle && chapterNumber && chapterContent) {
-            if (chapterIllustration) {
+            if (chapterIllustration || editMode === 1) {
                 $.ajax({
                     type: 'POST',
                     url: 'new',
                     contentType: false,
                     processData: false,
                     data: formData,
-                    success: function(msg) {
+                    success: function (msg) {
                         if (msg) return errorMessage(msg);
-                        return successMessage('Le chapitre à bien été ajouté');
+                        if (editMode) return successMessage('Le chapitre à bien été mis à jour !', '../chapters');
+                        return successMessage('Le chapitre à bien été ajouté', './chapters');
                     }
                 })
             }
@@ -102,21 +126,30 @@
     /**
      * Send success notifications
      * @param msg
+     * @param redirect
      * @return {*}
      */
-    function successMessage(msg) {
+    function successMessage(msg, redirect) {
         return Swal.fire({
             icon: 'success',
-            title: 'Success',
+            title: 'Succès',
             text: msg
         }).then(() => {
-            location.href = './chapters';
+            location.href = redirect;
         })
     }
 
     tinymce.init({
         selector: '#chapterContent',
         skin: 'oxide-dark',
-        height: '500px'
+        height: '500px',
+        setup: function (editor) {
+            editor.on('init', function () {
+                <?php if ($editMode): ?>
+                // Set default content
+                this.setContent(`<?php echo $ticket["content"] ?>`);
+                <?php endif; ?>
+            });
+        }
     });
 </script>

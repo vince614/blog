@@ -62,6 +62,19 @@ $router->get('/new', function () {});
 $router->post('/new', function () {});
 
 /**
+ * Edit chapter
+ * @GET & @POST route
+ */
+$router->get('/edit/:chapterId', function ($idTicket) {
+    require_once 'Controllers/NewController.php';
+    new NewController('new', $idTicket);
+});
+$router->post('/edit/:chapterId', function ($idTicket) {
+    require_once 'Controllers/NewController.php';
+    new NewController('new', $idTicket);
+});
+
+/**
  * Logout route
  * @GET route
  */

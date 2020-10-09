@@ -46,6 +46,22 @@ class Tickets extends Mysql
     }
 
     /**
+     * Edit ticket
+     * @param $title
+     * @param $chapter
+     * @param $content
+     * @param $authorId
+     * @param $ticketId
+     */
+    public function editTicket($title, $chapter, $content, $authorId, $ticketId)
+    {
+        /** @var PDO $pdo * */
+        $pdo = Mysql::_getConnection();
+        $req = $pdo->prepare('UPDATE tickets SET title = ?, chapter = ?, content = ?, author_id = ? WHERE id = ?');
+        $req->execute(array($title, $chapter, $content, $authorId, $ticketId));
+    }
+
+    /**
      * Read ticket
      * @param $ticketId
      * @return mixed
