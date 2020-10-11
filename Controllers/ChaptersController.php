@@ -43,15 +43,21 @@ class ChaptersController extends Controller
     private $_param;
 
     /**
+     * Pagination mode
+     * @var bool
+     */
+    private $_paginationMode;
+
+    /**
      * ChaptersController constructor.
      * @param $path
      * @param null $param
+     * @param bool $paginationMode
      */
-    public function __construct($path, $param = null)
+    public function __construct($path, $param = null, $paginationMode = false)
     {
-        if ($param) {
-            $this->_param = (int)$param;
-        }
+        if ($param) $this->_param = (int)$param;
+        if ($paginationMode) $this->_paginationMode = (bool) $paginationMode;
         $this->index($path);
     }
 
@@ -96,7 +102,7 @@ class ChaptersController extends Controller
         $this->setVar('isAdmin', $isAdmin);
 
         // If get ticket ID
-        if ($this->_param) {
+        if ($this->_param && !$this->_paginationMode) {
             // Read request if exist
             if ($request = $this->getPostRequest()) {
                 // Check if user is login
@@ -174,6 +180,11 @@ class ChaptersController extends Controller
                     $this->notFound();
                 }
             }
+        } elseif ($this->_param && $this->_paginationMode) {
+            // Fetch tickets & set page
+            $tickets = $this->_ticketsManager->fetchTickets($this->_param);
+            $this->setVar('tickets', $tickets);
+            $this->setVar('currentPage', $this->_param);
         } else {
             // Fetch all tickets
             $tickets = $this->_ticketsManager->fetchTickets();

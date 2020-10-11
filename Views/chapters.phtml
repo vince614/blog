@@ -2,6 +2,13 @@
 /** @var $tickets array */
 /** @var $ticket array */
 /** @var $isAdmin boolean */
+/** @var $currentPage int */
+if (!isset($currentPage)) $currentPage = 1;
+if ($currentPage === 1) {
+    $prevPage = 1;
+} else {
+    $prevPage = $currentPage - 1;
+}
 ?>
 <div class="header">
     <?php if ($viewTicket = isset($ticket)): ?>
@@ -33,6 +40,18 @@
                 </div>
             </a>
         <?php endforeach; ?>
+        <div class="pagination">
+            <a href="<?php echo $this->getHost() ?>/chapters/page/<?php echo $prevPage ?>">
+                <div class="page" tooltip="Précedent">
+                    <img src="<?php echo $this->getHost(); ?>/assets/imgs/icons/leftArrow.png" alt="left arrow">
+                </div>
+            </a>
+            <a href="<?php echo $this->getHost() ?>/chapters/page/<?php echo $currentPage + 1 ?>">
+                <div class="page" tooltip="Suivant">
+                    <img src="<?php echo $this->getHost(); ?>/assets/imgs/icons/rightArrow.png" alt="right arrow">
+                </div>
+            </a>
+        </div>
     <?php else: ?>
         <div class="chapterHeader">
             <h4 tooltip="Temps estimé pour la lecture" class="readTime lightText"><?php echo $readTime ?></h4>

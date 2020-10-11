@@ -9,18 +9,6 @@ class Tickets extends Mysql
     const TICKETS_FETCH_LIMIT = 5;
 
     /**
-     * Current page
-     * @var int
-     */
-    public $currentPage = 1;
-
-    /**
-     * Number of page
-     * @var int
-     */
-    public $pageCount;
-
-    /**
      * Create ticket
      * @param $title
      * @param $chapter
@@ -75,29 +63,25 @@ class Tickets extends Mysql
 
     /**
      * Fetch tickets
+     * @param null $page
      * @return mixed
      */
-    public function fetchTickets()
+    public function fetchTickets($page = null)
     {
-        $ticketsCount = $this->_ticketsCount();
-        $this->pageCount = ceil($ticketsCount / self::TICKETS_FETCH_LIMIT);
-        $firstFetch = ($this->currentPage - 1) * self::TICKETS_FETCH_LIMIT;
+        $currentPage = 1;
+        if ($page) {
+            $ticketsCount = $this->_ticketsCount();
+            $pageCount = ceil($ticketsCount / self::TICKETS_FETCH_LIMIT);
+            if ($page > $pageCount) {
+                $currentPage = $pageCount;
+            } else {
+                $currentPage = $page;
+            }
+        }
+        $firstFetch = ($currentPage - 1) * self::TICKETS_FETCH_LIMIT;
         $req = Mysql::_getConnection()->prepare("SELECT * FROM tickets ORDER BY date_public DESC LIMIT " . $firstFetch . ", " . self::TICKETS_FETCH_LIMIT);
         $req->execute();
         return $req->fetchAll();
-    }
-
-    /**
-     * Set current page
-     * @param $page
-     */
-    public function setPage($page)
-    {
-        if ($page > $this->pageCount) {
-            $this->currentPage = $this->pageCount;
-        } else {
-            $this->currentPage = $page;
-        }
     }
 
     /**

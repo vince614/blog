@@ -45,11 +45,11 @@ $router->get('/chapters', function () {  echo "Ensemble des chapitres"; });
  * Get chapter by ID
  * @GET & @POST route
  */
-$router->get('/chapters/:page', function ($idTicket) {
+$router->get('/chapters/:ticketId', function ($idTicket) {
     require_once 'Controllers/ChaptersController.php';
     new ChaptersController('chapters', $idTicket);
 });
-$router->post('/chapters/:page', function ($idTicket) {
+$router->post('/chapters/:ticketId', function ($idTicket) {
     require_once 'Controllers/ChaptersController.php';
     new ChaptersController('chapters', $idTicket);
 });
@@ -72,6 +72,15 @@ $router->get('/edit/:chapterId', function ($idTicket) {
 $router->post('/edit/:chapterId', function ($idTicket) {
     require_once 'Controllers/NewController.php';
     new NewController('new', $idTicket);
+});
+
+/**
+ * Pagination
+ * @GET route
+ */
+$router->get('/chapters/page/:page', function ($page) {
+    require_once 'Controllers/ChaptersController.php';
+    new ChaptersController('chapters', $page, true);
 });
 
 /**

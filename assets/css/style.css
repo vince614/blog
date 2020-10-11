@@ -603,6 +603,34 @@ CHAPTERS
     height: 100%;
 }
 
+.pagination {
+    display: flex;
+    margin: 20px;
+    padding: 20px;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.page:hover {
+    transition: ease-in-out .1s;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.page img {
+    width: 30px;
+    height: 30px;
+}
+
 /**
 FOOTER
  */
