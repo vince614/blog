@@ -13,3 +13,6 @@ package-lock.json
 
 ## Composer packages
 vendor/
+
+## Todo list
+TODO.txt

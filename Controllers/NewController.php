@@ -84,8 +84,13 @@ class NewController extends Controller
                 exit('Autorisation refusés');
             }
 
+            // Delete chapter
+            if (isset($request['type']) && $request['type'] === "delete") {
+                $this->_ticketsManager->deleteTicket($request['ticketId']);
+            }
+
             // Edit mode
-            if ($request['editMode'] == 1) {
+            if (isset($request['editMode']) && $request['editMode'] == 1) {
                 if (isset($_FILES["chapterIllustration"])) {
                     $error = $this->_checkAndUploadFile($_FILES, $request['chapterNumber']);
                     if ($error) {
@@ -100,18 +105,20 @@ class NewController extends Controller
                     $request['ticketId']
                 );
             } else {
-                $error = $this->_checkAndUploadFile($_FILES, $request['chapterNumber']);
-                if ($error) {
-                    echo $error;
-                } else {
-                    $error = $this->_ticketsManager->createTicket(
-                        $request['chapterTitle'],
-                        $request['chapterNumber'],
-                        $request['chapterContent'],
-                        $this->getUserId()
-                    );
+                if (isset($request['chapterNumber'], $request['chapterTitle'], $request['chapterContent'])) {
+                    $error = $this->_checkAndUploadFile($_FILES, $request['chapterNumber']);
                     if ($error) {
                         echo $error;
+                    } else {
+                        $error = $this->_ticketsManager->createTicket(
+                            $request['chapterTitle'],
+                            $request['chapterNumber'],
+                            $request['chapterContent'],
+                            $this->getUserId()
+                        );
+                        if ($error) {
+                            echo $error;
+                        }
                     }
                 }
             }

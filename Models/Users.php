@@ -185,13 +185,4 @@ class Users extends Mysql
             }
         }
     }
-
-    /**
-     * @TODO
-     * Faire un système d'édition des chapitres ---------------------------------- OK
-     * Bien régler l'intégration de l'éditeur de texte externe ------------------- OK
-     * Règler le message d'erreur lors de la connexion --------------------------- OK
-     * Prévoir un cookie "se souvenir de moi" avec un token de clé crypté -------- OK
-     * Edition / supppresion des commentaires ------------------------------------
-     */
 }
