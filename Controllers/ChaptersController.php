@@ -88,17 +88,47 @@ class ChaptersController extends Controller
      */
     private function _beforeRender()
     {
+        // Set isAdmin variable
+        $isAdmin = false;
+        if ($this->isLogin()) {
+            $isAdmin = $this->_userManager->isAdmin($this->getUserId());
+        }
+        $this->setVar('isAdmin', $isAdmin);
+
         // If get ticket ID
         if ($this->_param) {
             // Read request if exist
             if ($request = $this->getPostRequest()) {
                 // Check if user is login
                 if ($this->isLogin()) {
-                    $this->_commentManager->createComment($request['comment'], $this->getUserId(),
-                        $request['ticketId']);
+                    // Action type
+                    switch ($request['action']) {
+                        // Create new comment
+                        case 'create':
+                            $this->_commentManager->createComment(
+                                $request['comment'],
+                                $this->getUserId(),
+                                $request['ticketId']
+                            );
+                            break;
+                        // Signal comment
+                        case 'report':
+                            $error = $this->_commentManager->signalComment(
+                                $request['commentId'],
+                                $this->getUserId()
+                            );
+                            if ($error) echo $error;
+                            break;
+                        // Delete comment
+                        case 'delete':
+                            $this->_commentManager->deleteComment(
+                                $request['commentId']
+                            );
+                            break;
+                    }
                 } else {
                     // Callback error message
-                    echo 'Vous devez être connecté pour écrire un commentaire, connectez vous <a href="' . $this->getHost() . '/account">ici</a>';
+                    echo 'Vous devez être connecté, connectez vous <a href="' . $this->getHost() . '/account">ici</a>';
                 }
                 exit;
             } else {
@@ -120,6 +150,7 @@ class ChaptersController extends Controller
                 if ($comments) {
                     foreach ($comments as $comment) {
                         $comment['author'] = $this->_userManager->getUserById($comment['authorId']);
+                        $comment['isAuthor'] = $this->isLogin() ? $this->getUserId() == $comment['authorId'] : false;
                         $commentsResult[] = $comment;
                     }
                 }

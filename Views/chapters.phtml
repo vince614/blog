@@ -1,6 +1,7 @@
 <?php
 /** @var $tickets array */
 /** @var $ticket array */
+/** @var $isAdmin boolean */
 ?>
 <div class="header">
     <?php if ($viewTicket = isset($ticket)): ?>
@@ -20,9 +21,11 @@
     <?php if (!$viewTicket): ?>
         <?php foreach ($tickets as $ticket): ?>
             <a href="<?php echo $this->getHost() ?>/chapters/<?php echo $ticket['id'] ?>">
-                <div style="background-image: url('<?php echo $this->getHost() ?>/uploads/chapter_<?php echo $ticket['chapter'] ?>.png')" class="chapterCard">
+                <div style="background-image: url('<?php echo $this->getHost() ?>/uploads/chapter_<?php echo $ticket['chapter'] ?>.png')"
+                     class="chapterCard">
                     <div class="chapterCardHeader">
-                        <span class="regularText">Chapitre <?php echo $ticket['chapter'] ?> - <span class="lightText"><?php echo date("d/m/Y", $ticket['date_public']);  ?></span></span>
+                        <span class="regularText">Chapitre <?php echo $ticket['chapter'] ?> - <span
+                                    class="lightText"><?php echo date("d/m/Y", $ticket['date_public']); ?></span></span>
                     </div>
                     <div class="chapterCardTitle">
                         <h2 class="regularText">"<?php echo $ticket['title'] ?>"</h2>
@@ -47,12 +50,24 @@
                             <img src="<?php echo $this->getHost() ?>/assets/avatar/avatar.png">
                             <div class="commentCardinfos">
                                 <span class="regularText"><?php echo ucfirst($comment['author']['username']); ?></span>
-                                <span class="lightText small italic">Ecrit le <?php echo date('d/m/Y', $comment['date_public']) ?></span>
-                                <span class="lightText small italic">à <?php echo date('H:i:s', $comment['date_public']) ?></span>
+                                <span class="lightText small italic">Ecrit le <?php echo date('d/m/Y',
+                                        $comment['date_public']) ?></span>
+                                <span class="lightText small italic">à <?php echo date('H:i:s',
+                                        $comment['date_public']) ?></span>
                             </div>
                         </div>
                         <div class="commentCardRight">
                             <?php echo $comment['comment']; ?>
+                        </div>
+                        <div class="commentCardCommands">
+                            <div id="reportComment" class="logo" tooltip="Signaler le commentaire" data-comment-id="<?php echo $comment['id'] ?>">
+                                <img src="<?php echo $this->getHost() ?>/assets/imgs/icons/report.png" alt="Report">
+                            </div>
+                            <?php if ($isAdmin || $comment['isAuthor']): ?>
+                                <div id="deleteComment" class="logo" tooltip="Supprimer le commentaire" data-comment-id="<?php echo $comment['id'] ?>">
+                                    <img src="<?php echo $this->getHost() ?>/assets/imgs/icons/trash.png" alt="Trash">
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -79,10 +94,11 @@
         if (comment) {
             $.post('',
                 {
+                    action: 'create',
                     comment: comment,
-                    ticketId: <?php echo $viewTicket ? $ticket["id"] : NULL ?>
+                    ticketId: <?php echo $viewTicket ? $ticket["id"] : null ?>
                 },
-                function(msg) {
+                function (msg) {
                     if (msg) return errorMessage(msg);
                     successMessage('Votre commentaire à bien été ajouté').then(() => {
                         location.reload();
@@ -91,6 +107,59 @@
             );
         }
         return errorMessage('Veuillez écrire un commentaire.');
+    });
+
+    // Report comment
+    $(document).on("click", "#reportComment", function () {
+        Swal.fire({
+            title: 'Êtes-vous sûr de vouloir signaler le commentaire ?',
+            text: "Nos équipes vont analyser le commentaire",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, signalez-le!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post('',
+                    {
+                        action: 'report',
+                        commentId: $(this).attr('data-comment-id')
+                    },
+                    function (msg) {
+                        if (msg) return errorMessage(msg);
+                        return successMessage('Le commentaire à bien été signalé');
+                    }
+                );
+            }
+        });
+    });
+
+    $(document).on("click", "#deleteComment", function () {
+        Swal.fire({
+            title: 'Êtes-vous sûr de vouloir supprimer le commentaire ?',
+            text: "Vous ne pourrez pas revenir en arrière",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimez-le!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post('',
+                    {
+                        action: 'delete',
+                        commentId: $(this).attr('data-comment-id')
+                    },
+                    function (msg) {
+                        if (msg) return errorMessage(msg);
+                        successMessage('Le commentaire à bien été supprimé').then(() => {
+                            location.reload();
+                        });
+                    }
+                );
+            }
+        });
     });
 
     /**

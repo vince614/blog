@@ -65,12 +65,20 @@ class Comments extends Mysql
      * Signal comment
      * @param $commentId
      * @param $authorId
-     * @return $this
+     * @return string
      */
     public function signalComment($commentId, $authorId)
     {
-        $req = Mysql::_getConnection()->prepare("INSERT INTO signal (commentId, flagmanId, date_signal) VALUES (?, ?, ?)");
-        $req->execute(array($commentId, $authorId, time()));
-        return $this;
+        /** @var PDO $pdo */
+        $pdo = Mysql::_getConnection();
+
+        $req = $pdo->prepare("SELECT * FROM signal WHERE commentId = ? AND authorId = ?");
+        $req->execute(array($commentId, $authorId));
+        if ($req->rowCount() == 0) {
+            $req = Mysql::_getConnection()->prepare("INSERT INTO signal (commentId, authorId, date_signal) VALUES (?, ?, ?)");
+            $req->execute(array((int) $commentId, (int) $authorId, time()));
+        } else {
+            return 'Vous avez déjà signalé ce commentaire';
+        }
     }
 }
