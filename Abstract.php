@@ -8,6 +8,13 @@ require_once __DIR__ . '/Models/Mysql.php';
  */
 class Core_Abstract extends Mysql
 {
+
+    /**
+     * Host (domain)
+     * @var string
+     */
+    private $_host;
+
     /**
      * Get url with GET_METHOD
      * @return string
@@ -21,14 +28,27 @@ class Core_Abstract extends Mysql
     }
 
     /**
+     * Set host
+     */
+    private function _initHost()
+    {
+        parent::__construct();
+        $req = Mysql::_getConnection()->prepare("SELECT * FROM config");
+        $req->execute();
+        $config = $req->fetchAll();
+        $this->_host =  $config[1]['value'] != NULL ? $config[1]['value'] : $config[0]['value'];
+    }
+
+    /**
      * Get host
-     * @return string
+     * @return string|null
      */
     public function getHost()
     {
-        $rootDirectory = '/' . explode('/', dirname($_SERVER['SCRIPT_NAME']))[1];
-        $host = '//' . $_SERVER['HTTP_HOST'];
-        return $host . $rootDirectory;
+        if (!$this->_host) {
+            $this->_initHost();
+        }
+        return $this->_host;
     }
 
     /**
