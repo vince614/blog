@@ -28,10 +28,7 @@ class Core_Abstract extends Mysql
     {
         $rootDirectory = '/' . explode('/', dirname($_SERVER['SCRIPT_NAME']))[1];
         $host = '//' . $_SERVER['HTTP_HOST'];
-        if ($host == '//localhost' OR $host == '//127.0.0.1') {
-            $host = $rootDirectory;
-        }
-        return $host;
+        return $host . $rootDirectory;
     }
 
     /**
