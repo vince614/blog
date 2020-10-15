@@ -4,5 +4,15 @@
         <h3 class="regularText">Site réalisé par Vincent Vaufrey.</h3>
     </div>
 </div>
+<script>
+    const navBarResponsive = $('.navBarResponsive');
+    $('.navBarBurger').click(function () {
+        if (navBarResponsive.css('display') === "none") {
+            navBarResponsive.css('display', 'flex');
+        } else {
+            navBarResponsive.hide();
+        }
+    });
+</script>
 </body>
 </html>

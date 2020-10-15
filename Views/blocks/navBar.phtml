@@ -26,5 +26,17 @@
             <?php else: ?>
                 <a href="<?php echo $this->getHost() ?>/account">Connexion</a>
             <?php endif; ?>
+            <div class="navBarBurger">
+                <img src="<?php echo $this->getHost() ?>/assets/imgs/icons/list.png" alt="burger">
+            </div>
         </div>
+    </div>
+    <div class="navBarResponsive">
+        <a href="<?php echo $this->getHost() ?>">Accueil</a>
+        <a href="<?php echo $this->getHost() ?>/chapters">Chapitres</a>
+        <?php if ($this->isLogin()): ?>
+            <a href="<?php echo $this->getHost() ?>/account">Mon compte</a>
+        <?php else: ?>
+            <a href="<?php echo $this->getHost() ?>/account">Connexion</a>
+        <?php endif; ?>
     </div>
