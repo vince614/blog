@@ -16,3 +16,6 @@ vendor/
 
 ## Todo list
 TODO.txt
+
+## Mysql config
+Models/Mysql.php
