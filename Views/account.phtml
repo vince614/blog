@@ -4,7 +4,7 @@
 /** @var int $commentsCount */
 /** @var int $chaptersCount */
 ?>
-<div class="pageContainer">
+<main class="pageContainer">
     <?php if ($this->isLogin()): ?>
         <div class="accountLogged">
             <div class="profileContainer">
@@ -43,7 +43,7 @@
                     </div>
                 </a>
 
-                <div class="accountChapters">
+                <section class="accountChapters">
                     <h1 class="regularText">Vos chapitres</h1>
                     <div class="chaptersList">
                         <?php foreach ($chaptersWritter as $chapter): ?>
@@ -59,7 +59,7 @@
                             </a>
                         <?php endforeach; ?>
                     </div>
-                </div>
+                </section>
             <?php endif; ?>
         </div>
     <?php else: ?>
@@ -125,7 +125,7 @@
             </div>
         </div>
     <?php endif; ?>
-</div>
+</main>
 <script>
     /**
      * Login

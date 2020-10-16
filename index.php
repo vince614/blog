@@ -39,7 +39,7 @@ $router->get('/account', function () {});
  * All chapters
  * @GET & @POST route
  */
-$router->get('/chapters', function () {  echo "Ensemble des chapitres"; });
+$router->get('/chapters', function () {});
 
 /**
  * Get chapter by ID

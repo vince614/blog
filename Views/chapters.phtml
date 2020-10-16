@@ -10,7 +10,7 @@ if ($currentPage === 1) {
     $prevPage = $currentPage - 1;
 }
 ?>
-<div class="header">
+<header class="header">
     <?php if ($viewTicket = isset($ticket)): ?>
         <div class="headerText">
             <h1 class="regularText"><?php echo $ticket['title'] ?></h1>
@@ -23,7 +23,7 @@ if ($currentPage === 1) {
         </div>
         <img src="<?php echo $this->getHost() ?>/assets/imgs/library.jpg" alt="library">
     <?php endif; ?>
-</div>
+</header>
 <div class="chaptersList">
     <?php if (!$viewTicket): ?>
         <?php foreach ($tickets as $ticket): ?>
@@ -53,20 +53,20 @@ if ($currentPage === 1) {
             </a>
         </div>
     <?php else: ?>
-        <div class="chapterHeader">
-            <h4 tooltip="Temps estimé pour la lecture" class="readTime lightText"><?php echo $readTime ?></h4>
+        <section class="chapterHeader">
             <h1 class="regularText"><?php echo $ticket['title'] ?></h1>
-        </div>
+            <h4 tooltip="Temps estimé pour la lecture" class="readTime lightText"><?php echo $readTime ?></h4>
+        </section>
         <div class="chapterReadContent">
             <?php echo $ticket['content'] ?>
         </div>
-        <div class="commentContainer">
+        <section class="commentContainer">
             <h1 class="regularText">Commentaires</h1>
             <?php if (isset($comments)): ?>
                 <?php foreach ($comments as $comment): ?>
                     <div class="commentCard">
                         <div class="commentCardLeft">
-                            <img src="<?php echo $this->getHost() ?>/assets/avatar/avatar.png">
+                            <img src="<?php echo $this->getHost() ?>/assets/avatar/avatar.png" alt="avatar">
                             <div class="commentCardinfos">
                                 <span class="regularText"><?php echo ucfirst($comment['author']['username']); ?></span>
                                 <span class="lightText small italic">Ecrit le <?php echo date('d/m/Y',
@@ -103,7 +103,7 @@ if ($currentPage === 1) {
                     Publier
                 </div>
             </div>
-        </div>
+        </section>
     <?php endif; ?>
 </div>
 <script>

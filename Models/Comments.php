@@ -75,7 +75,7 @@ class Comments extends Mysql
         $req = $pdo->prepare("SELECT * FROM signal WHERE commentId = ? AND authorId = ?");
         $req->execute(array($commentId, $authorId));
         if ($req->rowCount() == 0) {
-            $req = Mysql::_getConnection()->prepare("INSERT INTO signal (commentId, authorId, date_signal) VALUES (?, ?, ?)");
+            $req = $pdo->prepare("INSERT INTO signal (commentId, authorId, date_signal) VALUES (?, ?, ?)");
             $req->execute(array((int) $commentId, (int) $authorId, time()));
         } else {
             return 'Vous avez déjà signalé ce commentaire';

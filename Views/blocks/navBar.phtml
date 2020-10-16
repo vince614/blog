@@ -20,7 +20,7 @@
     <title>Blog de Jean Forteroche</title>
 </head>
 <body>
-    <div class="navBar">
+    <nav class="navBar">
         <div class="navBarLeft">
             <a class="regularText" href="/">Jean Forteroche</a>
         </div>
@@ -36,8 +36,8 @@
                 <img src="<?php echo $this->getHost() ?>/assets/imgs/icons/list.png" alt="burger">
             </div>
         </div>
-    </div>
-    <div class="navBarResponsive">
+    </nav>
+    <nav class="navBarResponsive">
         <a href="<?php echo $this->getHost() ?>">Accueil</a>
         <a href="<?php echo $this->getHost() ?>/chapters">Chapitres</a>
         <?php if ($this->isLogin()): ?>
@@ -45,4 +45,4 @@
         <?php else: ?>
             <a href="<?php echo $this->getHost() ?>/account">Connexion</a>
         <?php endif; ?>
-    </div>
+    </nav>
